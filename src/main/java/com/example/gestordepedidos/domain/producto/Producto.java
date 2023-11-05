@@ -1,11 +1,21 @@
 package com.example.gestordepedidos.domain.producto;
-
+/**
+ * Clase que representa un producto en el sistema de gestión de pedidos.
+ */
 public class Producto {
     private Integer id_producto;
     private String nombre;
     private Double precio;
     private Integer cantidad_disponible;
 
+    /**
+     * Constructor que crea un nuevo objeto Producto con los atributos especificados.
+     *
+     * @param id_producto         Hace referencia al ID del producto.
+     * @param nombre              Se refiere al nombre del producto.
+     * @param precio              Se refiere al precio del producto.
+     * @param cantidad_disponible Hace referencia a la cantidad disponible del producto en el inventario.
+     */
     public Producto(Integer id_producto, String nombre, Double precio, Integer cantidad_disponible) {
         this.id_producto = id_producto;
         this.nombre = nombre;
@@ -13,6 +23,9 @@ public class Producto {
         this.cantidad_disponible = cantidad_disponible;
     }
 
+    /**
+     * Constructor sin argumentos que crea un objeto Producto vacío.
+     */
     public Producto() {
     }
 
@@ -48,8 +61,13 @@ public class Producto {
         this.cantidad_disponible = cantidad_disponible;
     }
 
+    /**
+     * Sobrescribe el método toString para representar el producto como una cadena de texto.
+     *
+     * @return Una representación de cadena del producto en el formato "nombre precio€".
+     */
     @Override
     public String toString() {
-        return nombre + '\'' + precio + "€ ";
+        return nombre + " " + precio + "€";
     }
 }

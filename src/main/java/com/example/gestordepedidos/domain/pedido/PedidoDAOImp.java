@@ -10,14 +10,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-public class PedidoDAOImp implements PedidoDAO{
+/**
+ * Implementación de la interfaz PedidoDAO que proporciona métodos para acceder a datos de pedidos en una base de datos.
+ */
+public class PedidoDAOImp implements PedidoDAO {
 
     private static Connection connection;
-
     private final static String queryLoadAll = "select * from Pedido where usuario = ?";
 
-    public PedidoDAOImp(Connection c){connection = c;}
+    /**
+     * Constructor de la clase que recibe una conexión a la base de datos.
+     *
+     * @param c La conexión a la base de datos.
+     */
+    public PedidoDAOImp(Connection c) {
+        connection = c;
+    }
+
+    /**
+     * Carga todos los pedidos asociados a un usuario con el ID especificado.
+     *
+     * @param id_pedido El ID del usuario del que se desean cargar los pedidos.
+     * @return Una lista de objetos Pedido que representan los pedidos asociados al usuario.
+     */
     @Override
     public ArrayList<Pedido> loadAll(Integer id_pedido) {
         ArrayList<Pedido> salida = new ArrayList<>();
@@ -27,7 +42,7 @@ public class PedidoDAOImp implements PedidoDAO{
             preparedStatement.setInt(1, id_pedido);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Pedido pedido = new Pedido();
                 pedido.setId_pedido(resultSet.getInt("id_pedido"));
                 pedido.setCodigo_pedido(resultSet.getString("codigo_pedido"));

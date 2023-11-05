@@ -4,15 +4,29 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * Implementación de la interfaz ProductoDAO que permite acceder a los datos de productos desde una base de datos.
+ */
 public class ProductoDAOImp implements ProductoDAO{
 
-private static Connection connection;
-private final static String queryLoad = "select / from Producto where id = ?";
+    private static Connection connection;
+    private final static String queryLoad = "select * from Producto where id = ?";
 
-public ProductoDAOImp(Connection c){
-    connection = c;
-}
+    /**
+     * Constructor de la clase ProductoDAOImp.
+     *
+     * @param c Conexión a la base de datos.
+     */
+    public ProductoDAOImp(Connection c){
+        connection = c;
+    }
+
+    /**
+     * Carga un producto por su ID desde la base de datos.
+     *
+     * @param id_producto El ID del producto que se desea cargar.
+     * @return El objeto Producto correspondiente al ID especificado, o null si no se encuentra.
+     */
     @Override
     public Producto loadProducto(Integer id_producto) {
         Producto producto = null;
