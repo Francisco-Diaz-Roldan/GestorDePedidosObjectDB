@@ -21,7 +21,7 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <ImageView>
+            <ImageView fitHeight="128.0" fitWidth="127.0">
                <image>
                   <Image url="@usuario (1).png" />
                </image>
@@ -34,13 +34,19 @@
          <children>
             <FlowPane alignment="CENTER" hgap="40.0">
                <children>
-                  <Label text="Usuario" />
+                  <Label text="Usuario">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <TextField id="txtUsuario" fx:id="txtUsuario" />
                </children>
             </FlowPane>
             <FlowPane alignment="CENTER" hgap="25.0">
                <children>
-                  <Label text="Contraseña" />
+                  <Label text="Contraseña">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <PasswordField id="txtPassword" fx:id="txtPassword" />
                </children>
             </FlowPane>
