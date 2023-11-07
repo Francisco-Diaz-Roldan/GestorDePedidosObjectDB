@@ -6,6 +6,8 @@ import com.example.gestordepedidos.domain.excepciones.UsuarioIncorrectoException
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Implementación de la interfaz UsuarioDAO para acceder y gestionar datos de usuarios en una base de datos.
  */
@@ -33,7 +35,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
      * @throws UsuarioIncorrectoException     Si no se encuentra un usuario con la dirección de correo electrónico dada.
      */
     @Override
-    public Usuario loadUser(String email, String password) throws PasswordIncorrectaException {
+    public Usuario loadUser(String email, String password) throws PasswordIncorrectaException, UsuarioIncorrectoException {
         Usuario usuario;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(loadUser);
@@ -45,14 +47,14 @@ public class UsuarioDAOImp implements UsuarioDAO {
                 usuario.setEmail(resultSet.getString("email"));
                 usuario.setPass(resultSet.getString("pass"));
                 usuario.setId_usuario(resultSet.getInt("id_usuario"));
+                usuario.setNombre(resultSet.getString("nombre"));
                 if (!password.equals(usuario.getPass())) {
                     throw new PasswordIncorrectaException("Contraseña incorrecta");
                 }
-                usuario.setNombre(resultSet.getString("nombre"));
             } else {
                 throw new UsuarioIncorrectoException("Usuario incorrecto");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return usuario;

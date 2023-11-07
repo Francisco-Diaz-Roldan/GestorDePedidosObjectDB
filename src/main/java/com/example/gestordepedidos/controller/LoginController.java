@@ -62,7 +62,6 @@ public class LoginController implements Initializable {
 
             // Cargo la vista principal del usuario.
             HelloApplication.loadFXMLUser("user-view.fxml");
-
         } catch (PasswordIncorrectaException e) {
             // Muestro un mensaje de error si la contraseña es incorrecta.
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -72,9 +71,33 @@ public class LoginController implements Initializable {
             alert.showAndWait();
 
             System.out.println("Contraseña incorrecta");
+
+            labelInfo.setText("Contraseña incorrecta");
+
         } catch (IOException e) {
-            // Lanzo una excepción en caso de error durante la carga de la vista.
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Contraseña incorrecta");
+            alert.setContentText("Contraseña incorrecta");
+            alert.showAndWait();
+
+            System.out.println("Contraseña incorrecta");
+
+            labelInfo.setText("Contraseña incorrecta");
+            labelInfo.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+
+        } catch (UsuarioIncorrectoException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Usuario incorrecto");
+            alert.setContentText("Usuario incorrecto");
+            alert.showAndWait();
+
+            System.out.println(" Usuario incorrecto");
+
+            labelInfo.setText("Usuario incorrecto");
+            labelInfo.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+
         }
     }
 

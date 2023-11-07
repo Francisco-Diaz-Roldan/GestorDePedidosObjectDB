@@ -1,6 +1,7 @@
 package com.example.gestordepedidos.domain.usuario;
 
 import com.example.gestordepedidos.domain.excepciones.PasswordIncorrectaException;
+import com.example.gestordepedidos.domain.excepciones.UsuarioIncorrectoException;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 /**
@@ -16,5 +17,5 @@ public interface UsuarioDAO {
      * @throws UserPrincipalNotFoundException Si no se encuentra un usuario con la dirección de correo electrónico dada.
      * @throws PasswordIncorrectaException    Si la contraseña proporcionada no coincide con la del usuario.
      */
-    public Usuario loadUser(String email, String password) throws UserPrincipalNotFoundException, PasswordIncorrectaException;
+    public Usuario loadUser(String email, String password) throws UsuarioIncorrectoException, PasswordIncorrectaException;
 }

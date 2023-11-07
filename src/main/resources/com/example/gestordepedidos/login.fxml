@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,11 +19,6 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <ImageView fitHeight="128.0" fitWidth="127.0">
-               <image>
-                  <Image url="@usuario (1).png" />
-               </image>
-            </ImageView>
          </children>
       </VBox>
    </top>
@@ -50,6 +43,7 @@
                   <PasswordField id="txtPassword" fx:id="txtPassword" />
                </children>
             </FlowPane>
+            <Label id="info" fx:id="labelInfo" />
          </children>
       </VBox>
    </center>
@@ -57,7 +51,6 @@
       <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" text="Acceder" />
-            <Label id="info" fx:id="labelInfo" />
          </children>
          <opaqueInsets>
             <Insets />
