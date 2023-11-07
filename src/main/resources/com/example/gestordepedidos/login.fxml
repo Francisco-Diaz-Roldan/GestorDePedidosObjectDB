@@ -57,7 +57,7 @@
       <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" text="Acceder" />
-            <Label id="info" />
+            <Label id="info" fx:id="labelInfo" />
          </children>
          <opaqueInsets>
             <Insets />

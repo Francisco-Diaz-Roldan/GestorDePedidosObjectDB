@@ -10,7 +10,8 @@ import java.sql.SQLException;
 public class ProductoDAOImp implements ProductoDAO{
 
     private static Connection connection;
-    private final static String queryLoad = "select * from Producto where id = ?";
+    ///private final static String queryLoad = "select * from Producto where id = ?";
+    private final static String queryLoad = "select * from Producto where id_item = ?";
 
     /**
      * Constructor de la clase ProductoDAOImp.

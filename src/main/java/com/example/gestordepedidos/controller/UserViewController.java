@@ -84,7 +84,7 @@ public class UserViewController implements Initializable {
         observablePedidos = FXCollections.observableArrayList();
         PedidoDAOImp daoPedido = new PedidoDAOImp(DBConnection.getConnection());
         Sesion.setPedidos(daoPedido.loadAll(Sesion.getUsuario().getId_usuario()));
-        observablePedidos.addAll(Sesion.getPedido());
+        observablePedidos.addAll(Sesion.getPedidos());
         tPedidos.setItems(observablePedidos);
 
         // Añado un listener a la tabla de pedidos para manejar la selección de un pedido.

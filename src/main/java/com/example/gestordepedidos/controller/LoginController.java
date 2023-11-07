@@ -10,10 +10,7 @@ import com.example.gestordepedidos.domain.usuario.UsuarioDAOImp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +28,8 @@ public class LoginController implements Initializable {
     private PasswordField txtPassword;
     @FXML
     private Button btnAcceder;
+    @FXML
+    private Label labelInfo;
 
     /**
      * Método que se ejecuta cuando se pulsa el botón "Acceder" en la vista de inicio de sesión.
