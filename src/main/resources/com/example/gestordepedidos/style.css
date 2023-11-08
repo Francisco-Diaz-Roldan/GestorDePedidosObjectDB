@@ -116,3 +116,7 @@ Label {
     -fx-background-color: transparent;
 }
 
+/*Estilo para cambiar el tipo de fuente*/
+* {
+    -fx-font-family: "Constantia"; /* Cambia el tipo de fuente a "Constantia"*/
+}
