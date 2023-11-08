@@ -10,24 +10,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.LoginController">
-   <top>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+<BorderPane id="fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.LoginController">
+   <center>
+      <VBox alignment="CENTER" spacing="15.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Bienvenido a mi gestor de pedidos">
+            <Label id="labelBienvenida" text="Bienvenido a mi gestor de pedidos">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-         </children>
-      </VBox>
-   </top>
-   <center>
-      <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
-         <children>
             <FlowPane alignment="CENTER" hgap="40.0">
                <children>
-                  <Label text="Usuario">
+                  <Label id="labelUsuario" text="Usuario">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
@@ -36,25 +30,20 @@
             </FlowPane>
             <FlowPane alignment="CENTER" hgap="25.0">
                <children>
-                  <Label text="Contraseña">
+                  <Label id="labeContraseña" text="Contraseña">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
                   <PasswordField id="txtPassword" fx:id="txtPassword" />
                </children>
             </FlowPane>
+            <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" text="Acceder">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
             <Label id="info" fx:id="labelInfo" />
          </children>
       </VBox>
    </center>
-   <bottom>
-      <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" text="Acceder" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </VBox>
-   </bottom>
 </BorderPane>

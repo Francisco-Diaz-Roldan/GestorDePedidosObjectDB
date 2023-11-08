@@ -1,0 +1,24 @@
+/* style.css */
+
+/* Estilo para el Label "Bienvenido a mi gestor de pedidos" y otros elementos */
+/*#labelBienvenida, #labelUsuario, #labelContraseña {
+    -fx-text-fill: #fffdfd; !* Color del texto en blanco *!
+}*/
+
+/* style.css */
+
+/* Estilo para el BorderPane principal con ID "fondo" */
+#fondo {
+    -fx-background-color: linear-gradient(to bottom right, #2D6281FF, #ffffff); /* Gradiente lineal de azul a blanco */
+}
+
+/* Estilo para el botón "Acceder" */
+#btnAcceder {
+    -fx-background-color: #36769d; /* Color de fondo del botón en blanco */
+    -fx-text-fill: #fffdfd; /* Color del texto del botón en #2D6281FF */
+}
+
+/* Estilo general para todas las etiquetas (Labels) */
+Label {
+    -fx-text-fill: #fffdfd; /* Color del texto en blanco */
+}
