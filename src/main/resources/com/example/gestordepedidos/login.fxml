@@ -23,7 +23,7 @@
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="56.0" fitWidth="51.0">
+                  <ImageView fitHeight="55.0" fitWidth="50.0">
                      <image>
                         <Image url="@../../../imagenes/logo_gestor_pedidos-removebg-preview.png" />
                      </image>

@@ -6,12 +6,17 @@
 /* Estilo para el botón "Acceder" */
 #btnAcceder {
     -fx-background-color: white; /* Color de fondo del botón en blanco */
-    /*-fx-text-fill:  #36769d; /* Color del texto del botón en #2D6281FF */
+    -fx-text-fill: #2D6281FF; /* Color del texto del botón en #2D6281FF */
 }
 
 /* Estilo general para todas las etiquetas (Labels) */
 Label {
     -fx-text-fill: white; /* Color del texto en blanco */
+}
+
+/* Estilo para la etiqueta (LabelBienvenida) */
+#labelBienvenida {
+    -fx-font-size: 30; /* Tamaño de fuente 30 */
 }
 
 /* Estilo para la barra de menú */
@@ -39,6 +44,7 @@ Label {
     -fx-text-fill: white; /* Color del texto en blanco */
     -fx-font-weight: normal; /* Peso de fuente normal */
 }
+
 
 /**********************Tablas*********************/
 
@@ -92,9 +98,9 @@ Label {
     -fx-alignment: center;
 }
 
-/*Estilo para cmbiar el fondo del título de columna cuando el ratón está sobre él*/
+/*Estilo para cambiar el fondo del título de columna cuando el ratón está sobre él*/
 .table-view .column-header:hover {
-    -fx-background-color: #3389ff;
+    -fx-background-color: #2f7eea;
 }
 
 /*Estilo para cambiar el tamaño, bordes y color de fondo de los títulos*/

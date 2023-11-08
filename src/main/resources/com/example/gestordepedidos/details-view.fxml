@@ -12,17 +12,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="226.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.DetailsViewController">
+<VBox id="fondo" prefHeight="345.0" prefWidth="450.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.DetailsViewController">
    <children>
-      <MenuBar>
+      <MenuBar id="menuBar">
         <menus>
-          <Menu mnemonicParsing="false" text="Opciones">
+          <Menu id="txtMenu" mnemonicParsing="false" text="Opciones">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#volverAtras" text="Atrás" />
+              <MenuItem id="txtItem" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                  <SeparatorMenuItem id="txtItem" mnemonicParsing="false" />
+                  <MenuItem id="txtItem" mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de" />
+                  <SeparatorMenuItem id="txtItem" mnemonicParsing="false" />
+                  <MenuItem id="txtItem" mnemonicParsing="false" onAction="#volverAtras" text="Atrás" />
             </items>
           </Menu>
         </menus>

@@ -8,12 +8,14 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.UserViewController">
+<VBox id="fondo" prefHeight="550.0" prefWidth="750.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.UserViewController">
    <children>
       <MenuBar id="menuBar">
         <menus>
@@ -32,7 +34,15 @@
                <children>
                   <FlowPane alignment="CENTER">
                      <children>
-                        <Label fx:id="lblUsuario" alignment="CENTER" text="Bienvenido " />
+                        <Label id="labelBienvenida" fx:id="lblUsuario" alignment="CENTER" text="Bienvenido ">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font></Label>
+                        <ImageView fitHeight="55.0" fitWidth="50.0">
+                           <image>
+                              <Image url="@../../../imagenes/logo_gestor_pedidos-removebg-preview.png" />
+                           </image>
+                        </ImageView>
                      </children>
                      <FlowPane.margin>
                         <Insets bottom="5.0" top="5.0" />
@@ -42,7 +52,7 @@
             </FlowPane>
          </top>
          <center>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="550.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <children>
                   <FlowPane alignment="CENTER">
                      <children>
@@ -56,13 +66,13 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </FlowPane>
-                  <TableView fx:id="tPedidos" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tPedidos" minHeight="386.0" prefHeight="386.0" prefWidth="703.0">
                     <columns>
                         <TableColumn fx:id="cIdPedido" prefWidth="75.0" text="ID" />
                       <TableColumn fx:id="cCodigoPedido" prefWidth="75.0" text="Código" />
                       <TableColumn fx:id="cFecha" prefWidth="75.0" text="Fecha" />
                         <TableColumn fx:id="cUsuario" prefWidth="75.0" text="Usuario" />
-                        <TableColumn fx:id="cTotal" prefWidth="98.4000244140625" text="Total" />
+                        <TableColumn fx:id="cTotal" prefWidth="75.0" text="Total" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
