@@ -6,7 +6,7 @@
 /* Estilo para el botón "Acceder" */
 #btnAcceder {
     -fx-background-color: white; /* Color de fondo del botón en blanco */
-    -fx-text-fill:  #36769d; /* Color del texto del botón en #2D6281FF */
+    /*-fx-text-fill:  #36769d; /* Color del texto del botón en #2D6281FF */
 }
 
 /* Estilo general para todas las etiquetas (Labels) */
@@ -30,12 +30,83 @@ Label {
 
 /* Estilo para el texto del Menu "Opciones" ("txtMenu") */
 #txtMenu {
-    -fx-text-fill: #fffdfd; /* Color del texto en blanco */
+    -fx-text-fill: white; /* Color del texto en blanco */
     -fx-font-weight: bold; /* Peso de fuente en negrita */
 }
 
 /* Estilo para el texto de los elementos del menú ("txtItem") */
 #txtItem {
-    -fx-text-fill: #fffdfd; /* Color del texto en blanco */
+    -fx-text-fill: white; /* Color del texto en blanco */
     -fx-font-weight: normal; /* Peso de fuente normal */
 }
+
+/**********************Tablas*********************/
+
+/* Estilo para las celdas de tabla cuando el cursor está sobre ellas*/
+.table-cell:hover {
+    -fx-background-color: #2a5c7a;
+    -fx-text-background-color: white;
+}
+
+/* Estilo para eliminar el borde de las celdas vacías en la tabla*/
+.table-row-cell:empty .table-cell{
+    -fx-border-width: 0px;
+}
+
+/* Estilo para las celdas vacías en la tabla cuando el cursor está sobre ellas */
+.table-row-cell:empty .table-cell:empty:hover{
+    -fx-background-color: white;
+}
+
+/* Estilo para centrar el contenido de las celdas*/
+.table-cell:filled {
+    -fx-alignment: CENTER;
+}
+
+/*Estilo para filas cuando el ratón se encuentra sobre ellas*/
+.table-view:row-selection .table-row-cell:filled:hover {
+    -fx-background-color: white;
+    -fx-text-background-color: #2a5c7a ;
+}
+
+/*Estilo para filas seleccionadas cuando el ratón se encuentra sobre ellas*/
+.table-view:row-selection .table-row-cell:filled:selected:hover {
+    -fx-background-color: #2a5c7a;
+}
+
+/*Estilo para filas seleccionadas por el usuario*/
+.table-view:row-selection .table-row-cell:filled:selected {
+    -fx-background-color: white;
+}
+
+/*Elimina el borde del table que aparece cuando el mismo tiene el foco*/
+.table-view, .table-view:focused {
+    -fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+    -fx-background-insets: -1.5, 0, 1;
+    -fx-background-radius: 1.5, 0, 0;
+}
+
+/*Estilo para centrar y cambiar el color de los títulos de columnas*/
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+/*Estilo para cmbiar el fondo del título de columna cuando el ratón está sobre él*/
+.table-view .column-header:hover {
+    -fx-background-color: #3389ff;
+}
+
+/*Estilo para cambiar el tamaño, bordes y color de fondo de los títulos*/
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #2a5c7a;
+    -fx-size: 50;
+    -fx-border-width: 0 1 5 0;
+    -fx-border-insets: 0;
+}
+
+/*Estilo para hacer transparente el fondo de los títulos*/
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
