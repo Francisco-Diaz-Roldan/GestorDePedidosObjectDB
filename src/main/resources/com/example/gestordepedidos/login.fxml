@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,11 +16,20 @@
    <center>
       <VBox alignment="CENTER" spacing="15.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
-            <Label id="labelBienvenida" text="Bienvenido a mi gestor de pedidos">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
+            <FlowPane alignment="TOP_CENTER" hgap="10.0">
+               <children>
+                  <Label id="labelBienvenida" text="Bienvenido a mi gestor de pedidos">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="56.0" fitWidth="51.0">
+                     <image>
+                        <Image url="@../../../imagenes/logo_gestor_pedidos-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </FlowPane>
             <FlowPane alignment="CENTER" hgap="40.0">
                <children>
                   <Label id="labelUsuario" text="Usuario">

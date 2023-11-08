@@ -1,15 +1,41 @@
 /* Estilo para el BorderPane principal con ID "fondo" */
 #fondo {
-    -fx-background-color: linear-gradient(to bottom right, #2D6281FF, #ffffff); /* Gradiente lineal de azul a blanco */
+    -fx-background-color: linear-gradient(to bottom right, #2D6281FF, white); /* Gradiente lineal de azul a blanco */
 }
 
 /* Estilo para el botón "Acceder" */
 #btnAcceder {
-    -fx-background-color: #fffdfd; /* Color de fondo del botón en blanco */
+    -fx-background-color: white; /* Color de fondo del botón en blanco */
     -fx-text-fill:  #36769d; /* Color del texto del botón en #2D6281FF */
 }
 
 /* Estilo general para todas las etiquetas (Labels) */
 Label {
+    -fx-text-fill: white; /* Color del texto en blanco */
+}
+
+/* Estilo para la barra de menú */
+#menuBar {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/**
+ * Estilo para el texto en elementos de menú.
+ */
+#txtMenu > .label{
+    -fx-text-fill: white; /* Color del texto en blanco */
+}
+
+/* Estilo para el texto del Menu "Opciones" ("txtMenu") */
+#txtMenu {
     -fx-text-fill: #fffdfd; /* Color del texto en blanco */
+    -fx-font-weight: bold; /* Peso de fuente en negrita */
+}
+
+/* Estilo para el texto de los elementos del menú ("txtItem") */
+#txtItem {
+    -fx-text-fill: #fffdfd; /* Color del texto en blanco */
+    -fx-font-weight: normal; /* Peso de fuente normal */
 }

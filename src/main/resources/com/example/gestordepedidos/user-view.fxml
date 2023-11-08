@@ -13,15 +13,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.UserViewController">
+<VBox id="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.UserViewController">
    <children>
-      <MenuBar>
+      <MenuBar id="menuBar">
         <menus>
-          <Menu mnemonicParsing="false" text="Opciones">
+          <Menu id="txtMenu" mnemonicParsing="false" text="Opciones">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de..." />
+                  <MenuItem id="txtItem" mnemonicParsing="false" onAction="#mostrarAcercaDe" text="Acerca de..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
+              <MenuItem id="txtItem" mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
         </menus>
