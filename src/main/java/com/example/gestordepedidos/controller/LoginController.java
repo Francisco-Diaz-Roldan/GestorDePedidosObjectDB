@@ -75,6 +75,9 @@ public class LoginController implements Initializable {
             labelInfo.setText("Contraseña incorrecta");
 
         } catch (IOException e) {
+            labelInfo.setText("Contraseña incorrecta");
+            labelInfo.setStyle("-fx-text-fill: red;");
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText("Contraseña incorrecta");
@@ -83,10 +86,11 @@ public class LoginController implements Initializable {
 
             System.out.println("Contraseña incorrecta");
 
-            labelInfo.setText("Contraseña incorrecta");
-            //labelInfo.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 
         } catch (UsuarioIncorrectoException e) {
+            labelInfo.setText("Usuario incorrecto");
+            labelInfo.setStyle("-fx-text-fill: red;");
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText("Usuario incorrecto");
@@ -95,8 +99,6 @@ public class LoginController implements Initializable {
 
             System.out.println(" Usuario incorrecto");
 
-            labelInfo.setText("Usuario incorrecto");
-            //labelInfo.setStyle("-fx-background-color: red; -fx-text-fill: white;");
 
         }
     }
