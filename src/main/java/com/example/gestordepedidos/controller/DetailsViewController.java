@@ -73,7 +73,9 @@ public class DetailsViewController implements Initializable {
         // Creo una instancia del DAO para acceder a los detalles de los pedidos (items) desde la base de datos.
         ItemDAOImp daoItem = new ItemDAOImp(DBConnection.getConnection());
         // Cargo los detalles de los pedidos (items) relacionados con el pedido actual.
+        System.out.println(Sesion.getPedido());
         Sesion.setItems(daoItem.loadAll(Sesion.getPedido().getCodigo_pedido()));
+        System.out.println(Sesion.getItems());
         // Agrego los detalles de los pedidos (items) cargados previamente a la lista observable.
         observableListItem.addAll(Sesion.getItems());
         // Establezco la lista observable como el conjunto de elementos que se mostrarán en la tabla.
