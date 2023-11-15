@@ -29,7 +29,6 @@ public class UsuarioDAO implements DAO<Usuario> {
             salida = session.get(Usuario.class, id);
         }
         return salida;
-
     }
 
     @Override
