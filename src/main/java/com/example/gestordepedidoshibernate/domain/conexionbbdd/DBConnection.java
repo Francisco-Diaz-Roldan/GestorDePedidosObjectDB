@@ -1,4 +1,4 @@
-package com.example.gestordepedidos.domain.conexionbbdd;
+package com.example.gestordepedidoshibernate.domain.conexionbbdd;
 
 import lombok.Getter;
 

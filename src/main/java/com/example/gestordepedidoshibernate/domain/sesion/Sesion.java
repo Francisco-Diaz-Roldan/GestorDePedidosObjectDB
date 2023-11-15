@@ -1,9 +1,9 @@
-package com.example.gestordepedidos.domain.sesion;
+package com.example.gestordepedidoshibernate.domain.sesion;
 
-import com.example.gestordepedidos.domain.item.Item;
-import com.example.gestordepedidos.domain.pedido.Pedido;
-import com.example.gestordepedidos.domain.producto.Producto;
-import com.example.gestordepedidos.domain.usuario.Usuario;
+import com.example.gestordepedidoshibernate.domain.item.Item;
+import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
+import com.example.gestordepedidoshibernate.domain.producto.Producto;
+import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
 
 import java.util.ArrayList;
 /**

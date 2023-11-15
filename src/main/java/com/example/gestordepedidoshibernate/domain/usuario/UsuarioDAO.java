@@ -1,7 +1,7 @@
-package com.example.gestordepedidos.domain.usuario;
+package com.example.gestordepedidoshibernate.domain.usuario;
 
-import com.example.gestordepedidos.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidos.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
+import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 /**

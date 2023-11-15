@@ -1,4 +1,4 @@
-package com.example.gestordepedidos.domain.excepciones;
+package com.example.gestordepedidoshibernate.domain.excepciones;
 /**
  * Excepción personalizada lanzada cuando se detecta una contraseña incorrecta durante un proceso de autenticación.
  */

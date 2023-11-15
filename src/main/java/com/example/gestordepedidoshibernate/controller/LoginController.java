@@ -1,12 +1,12 @@
-package com.example.gestordepedidos.controller;
+package com.example.gestordepedidoshibernate.controller;
 
-import com.example.gestordepedidos.HelloApplication;
-import com.example.gestordepedidos.domain.conexionbbdd.DBConnection;
-import com.example.gestordepedidos.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidos.domain.excepciones.UsuarioIncorrectoException;
-import com.example.gestordepedidos.domain.sesion.Sesion;
-import com.example.gestordepedidos.domain.usuario.Usuario;
-import com.example.gestordepedidos.domain.usuario.UsuarioDAOImp;
+import com.example.gestordepedidoshibernate.HelloApplication;
+import com.example.gestordepedidoshibernate.domain.conexionbbdd.DBConnection;
+import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
+import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
+import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
+import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAOImp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -76,7 +76,6 @@ public class LoginController implements Initializable {
 
         } catch (IOException e) {
             labelInfo.setText("Contraseña incorrecta");
-            labelInfo.setStyle("-fx-text-fill: red;");
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
@@ -89,7 +88,6 @@ public class LoginController implements Initializable {
 
         } catch (UsuarioIncorrectoException e) {
             labelInfo.setText("Usuario incorrecto");
-            labelInfo.setStyle("-fx-text-fill: red;");
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");

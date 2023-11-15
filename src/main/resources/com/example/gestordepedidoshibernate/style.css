@@ -19,6 +19,12 @@ Label {
     -fx-font-size: 30; /* Tamaño de fuente 30 */
 }
 
+/* Estilo para la etiqueta (LabelInfo) */
+#labelInfo {
+    -fx-font-size: 14; /* Tamaño de fuente 14 */
+    -fx-text-fill: red;/* Color del texto en rojo */
+}
+
 /* Estilo para la barra de menú */
 #menuBar {
     -fx-background-color: transparent; /* Fondo transparente */

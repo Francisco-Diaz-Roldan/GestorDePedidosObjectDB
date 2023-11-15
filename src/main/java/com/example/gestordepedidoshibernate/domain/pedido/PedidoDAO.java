@@ -1,4 +1,4 @@
-package com.example.gestordepedidos.domain.pedido;
+package com.example.gestordepedidoshibernate.domain.pedido;
 
 import java.util.ArrayList;
 /**

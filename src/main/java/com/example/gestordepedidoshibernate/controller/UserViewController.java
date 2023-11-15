@@ -1,10 +1,10 @@
-package com.example.gestordepedidos.controller;
+package com.example.gestordepedidoshibernate.controller;
 
-import com.example.gestordepedidos.HelloApplication;
-import com.example.gestordepedidos.domain.conexionbbdd.DBConnection;
-import com.example.gestordepedidos.domain.pedido.Pedido;
-import com.example.gestordepedidos.domain.pedido.PedidoDAOImp;
-import com.example.gestordepedidos.domain.sesion.Sesion;
+import com.example.gestordepedidoshibernate.HelloApplication;
+import com.example.gestordepedidoshibernate.domain.conexionbbdd.DBConnection;
+import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
+import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAOImp;
+import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

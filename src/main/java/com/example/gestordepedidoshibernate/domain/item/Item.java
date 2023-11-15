@@ -1,8 +1,7 @@
-package com.example.gestordepedidos.domain.item;
+package com.example.gestordepedidoshibernate.domain.item;
 
-import com.example.gestordepedidos.domain.producto.Producto;
+import com.example.gestordepedidoshibernate.domain.producto.Producto;
 
-import java.io.Serializable;
 /**
  * Clase que representa un elemento item dentro de un pedido, que incluye información sobre el producto, la cantidad
  * y el pedido al que pertenece.

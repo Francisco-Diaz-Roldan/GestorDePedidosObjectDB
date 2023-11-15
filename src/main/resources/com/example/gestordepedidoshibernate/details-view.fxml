@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="fondo" prefHeight="345.0" prefWidth="450.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidos.controller.DetailsViewController">
+<VBox id="fondo" prefHeight="345.0" prefWidth="450.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidoshibernate.controller.DetailsViewController">
    <children>
       <MenuBar id="menuBar">
         <menus>

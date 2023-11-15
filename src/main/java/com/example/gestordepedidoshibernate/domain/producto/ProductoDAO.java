@@ -1,4 +1,4 @@
-package com.example.gestordepedidos.domain.producto;
+package com.example.gestordepedidoshibernate.domain.producto;
 
 /**
  * Interfaz que define métodos para acceder a datos de productos en el sistema de gestión de pedidos.

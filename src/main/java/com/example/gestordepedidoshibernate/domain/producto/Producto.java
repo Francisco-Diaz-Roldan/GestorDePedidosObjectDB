@@ -1,4 +1,4 @@
-package com.example.gestordepedidos.domain.producto;
+package com.example.gestordepedidoshibernate.domain.producto;
 /**
  * Clase que representa un producto en el sistema de gestión de pedidos.
  */

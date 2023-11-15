@@ -1,4 +1,4 @@
-package com.example.gestordepedidos;
+package com.example.gestordepedidoshibernate;
 
 
 import javafx.application.Application;
