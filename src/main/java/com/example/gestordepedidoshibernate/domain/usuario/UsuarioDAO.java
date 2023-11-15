@@ -1,21 +1,65 @@
 package com.example.gestordepedidoshibernate.domain.usuario;
 
-import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.dao.DAO;
+import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
-/**
- * Interfaz que define métodos para acceder y gestionar datos de usuarios en una base de datos.
- */
-public interface UsuarioDAO {
-    /**
-     * Carga un usuario basado en la dirección de correo electrónico y la contraseña proporcionados.
-     *
-     * @param email    Se refiere a la dirección de correo electrónico del usuario que se desea cargar.
-     * @param password Se refiere a la contraseña asociada al usuario.
-     * @return Se refiere al objeto Usuario cargado si los datos son válidos.
-     * @throws UserPrincipalNotFoundException Si no se encuentra un usuario con la dirección de correo electrónico dada.
-     * @throws PasswordIncorrectaException    Si la contraseña proporcionada no coincide con la del usuario.
-     */
-    public Usuario loadUser(String email, String password) throws UsuarioIncorrectoException, PasswordIncorrectaException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class UsuarioDAO implements DAO<Usuario> {
+    //public Usuario loadUser(String email, String password) throws UsuarioIncorrectoException, PasswordIncorrectaException;
+
+    @Override
+    public ArrayList<Usuario> getAll() {
+        List<Usuario> salida = new ArrayList<Usuario>(0);
+        try(Session s = HibernateUtils.getSessionFactory().openSession()){
+            Query<Usuario> q = s.createQuery("from Usuario ",Usuario.class);
+            salida = q.getResultList();
+        }
+        return (ArrayList<Usuario>) salida;
+    }
+
+    @Override
+    public Usuario get(Integer id) {
+        var salida = new Usuario();
+        try(Session session = HibernateUtils.getSessionFactory().openSession()){
+            salida = session.get(Usuario.class, id);
+        }
+        return salida;
+
+    }
+
+    @Override
+    public Usuario save(Usuario data) {
+        return null;
+    }
+
+    @Override
+    public void update(Usuario data) {
+
+    }
+
+    @Override
+    public void delete(Usuario data) {
+
+    }
+    public Usuario validateUser(String email, String pass) {
+        Usuario result = null;
+
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Query<Usuario> q = session.createQuery("from Usuario where email=:e and pass=:p", Usuario.class);
+            q.setParameter("e", email);
+            q.setParameter("p", pass);
+
+            try {
+                result = q.getSingleResult();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return result;
+    }
 }

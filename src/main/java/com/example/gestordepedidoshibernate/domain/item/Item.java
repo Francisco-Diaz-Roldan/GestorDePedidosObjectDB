@@ -1,5 +1,6 @@
 package com.example.gestordepedidoshibernate.domain.item;
 
+import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import com.example.gestordepedidoshibernate.domain.producto.Producto;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class Item implements Serializable {
     private Integer id_item;           // Identificador único del item.
     @ManyToOne
     @JoinColumn(name = "codigo_pedido", referencedColumnName="codigo_pedido")
-    private  String codigo_pedido;     // Código único del pedido al que pertenece.
+    private Pedido codigo_pedido;     // Código único del pedido al que pertenece.
     @Column(name = "cantidad")
     private Integer cantidad;          // Cantidad de productos en este item.
     @OneToOne
