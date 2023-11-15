@@ -4,6 +4,7 @@ import com.example.gestordepedidoshibernate.domain.dao.DAO;
 import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
 import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
@@ -32,7 +33,20 @@ public class ItemDAO implements DAO<Item> {
 
     @Override
     public Item save(Item data) {
-        return null;//TODO hacer el save
+        try (org.hibernate.Session s = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction t = null;
+            try {
+                t = s.beginTransaction();
+                s.persist(data);//Lo hago persistente por lo que se sincronizan los datos con la base de datos, lo que implica que el objeto se guarda y se modifica
+                t.commit();
+            } catch (Exception e) {
+                if (t != null) {
+                    t.rollback();
+                }
+                e.printStackTrace();
+            }
+            return data;
+        }
     }
 
     @Override
