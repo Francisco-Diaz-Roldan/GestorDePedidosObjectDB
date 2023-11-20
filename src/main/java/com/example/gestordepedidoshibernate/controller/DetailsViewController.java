@@ -1,9 +1,7 @@
 package com.example.gestordepedidoshibernate.controller;
 
 import com.example.gestordepedidoshibernate.HelloApplication;
-import com.example.gestordepedidoshibernate.domain.conexionbbdd.DBConnection;
 import com.example.gestordepedidoshibernate.domain.item.Item;
-import com.example.gestordepedidoshibernate.domain.item.ItemDAOImp;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

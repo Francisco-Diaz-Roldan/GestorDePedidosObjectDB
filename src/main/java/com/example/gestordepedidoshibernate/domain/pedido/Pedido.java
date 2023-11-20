@@ -17,10 +17,10 @@ public class Pedido implements Serializable {
     @Column(name="fecha")
     private String fecha;                // Fecha de emisión del pedido.
     @Column(name = "total")
-    private Integer total;               // Total del pedido.
-    @OneToMany
-    @JoinColumn(name = "codigo_pedido", referencedColumnName="codigo_pedido") //La columna de referencia es la columna de la otra tabla de lo que quiero enlazar
+    private Double total;               // Total del pedido.
+    @Column(name = "codigo_pedido") //La columna de referencia es la columna de la otra tabla de lo que quiero enlazar
     private String codigo_pedido;        // Código único asociado al pedido.
+
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id_usuario")
     private Usuario usuario;             // Identificador del usuario que realizó el pedido.

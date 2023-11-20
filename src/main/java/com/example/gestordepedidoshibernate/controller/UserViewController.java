@@ -1,10 +1,11 @@
 package com.example.gestordepedidoshibernate.controller;
 
 import com.example.gestordepedidoshibernate.HelloApplication;
-import com.example.gestordepedidoshibernate.domain.conexionbbdd.DBConnection;
+import com.example.gestordepedidoshibernate.domain.item.Item;
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
-import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAOImp;
+
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
+import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,15 +41,7 @@ public class UserViewController implements Initializable {
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
 
 
-    /**
-     * Inicializo la vista principal del usuario y se establecen los controladores de eventos en los elementos de la
-     * interfaz de usuario.
-     * Este método se ejecuta al cargar la vista y configura la visualización de los pedidos del usuario actual.
-     *
-     * @param url            Se refiere a la bicación relativa de la raíz del documento a la que se resuelve la URL
-     *                      que se le ha pasado como argumento.
-     * @param resourceBundle Hace referencia a los recursos de un objeto ResourceBundle para esta inicialización.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Configura las columnas de la tabla de pedidos y sus valores.
@@ -82,44 +75,45 @@ public class UserViewController implements Initializable {
 
         // Creo una lista observable para los pedidos y carga los pedidos del usuario actual.
         observablePedidos = FXCollections.observableArrayList();
-        PedidoDAOImp daoPedido = new PedidoDAOImp(DBConnection.getConnection());
-        Sesion.setPedidos(daoPedido.loadAll(Sesion.getUsuario().getId_usuario()));
-        observablePedidos.addAll(Sesion.getPedidos());
-        tPedidos.setItems(observablePedidos);
 
+        Sesion.setUsuario((new UsuarioDAO()).get(Sesion.getUsuario().getId_usuario()));
+
+        cargarLista();
+
+        observablePedidos.addAll(Sesion.getPedidos());
+
+        
         // Añado un listener a la tabla de pedidos para manejar la selección de un pedido.
-        tPedidos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            seleccionarPedido(tPedidos.getSelectionModel().getSelectedItem());
+        tPedidos.getSelectionModel().selectedItemProperty().addListener((observableValue, pedido, t1) -> {
+            Sesion.setPedido(t1);
         });
     }
 
-    /**
-     * Maneja la selección de un pedido en la tabla de pedidos.
-     * Al seleccionar un pedido, se actualiza el pedido actual en la sesión y se carga la vista de detalles del pedido.
-     *
-     * @param pedido Hace referencia al pedido seleccionado en la tabla.
-     */
-    private void seleccionarPedido(Pedido pedido) {
-        Sesion.setPedido(pedido);
-        Sesion.setPosicion(tPedidos.getSelectionModel().getSelectedIndex());
-        HelloApplication.loadFXMLDetails("details-view.fxml");
+    private void cargarLista() {
+        observablePedidos.setAll(Sesion.getUsuario().getPedidos());
+        for (Pedido pedidos : observablePedidos) {
+            Double totalPedidos = calcularTotalPedidos(pedidos);
+            pedidos.setTotal(totalPedidos);
+        }
+        tPedidos.setItems(observablePedidos);
     }
 
-    /**
-     * Maneja el evento de salida del usuario. Cierra la sesión actual y carga la vista de inicio de sesión.
-     *
-     * @param actionEvent Se refiere al evento de acción que desencadena la llamada a este método.
-     */
+    private Double calcularTotalPedidos(Pedido pedido) {
+        Double total  = 0.0;
+
+        for (Item items : pedido.getItems()){
+            total += items.getProducto().getPrecio() * items.getCantidad();
+        }
+        return total;
+    }
+
+
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
-    /**
-     * Muestra una ventana emergente de información que describe la aplicación y su creador.
-     *
-     * @param actionEvent Hace referencia al evento de acción que desencadena la llamada a este método.
-     */
+
     public void mostrarAcercaDe(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acerca de");

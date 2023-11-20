@@ -74,8 +74,8 @@ public class PedidoDAO implements DAO<Pedido> {
     @Override
     public void delete(Pedido data) {
         HibernateUtils.getSessionFactory().inTransaction((session) ->{
-            Pedido p = session.get( Pedido.class, data.getId_pedido());
-            session.remove(p);
+            Pedido pedido = session.get( Pedido.class, data.getId_pedido());
+            session.remove(pedido);
         });
     }
     //public ArrayList<Pedido> loadAll(Integer id_pedido);
