@@ -51,7 +51,25 @@ public class ItemDAO implements DAO<Item> {
 
     @Override
     public void update(Item data) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Transaction transaction = null;
 
+        try {
+            //Da comienzo la transaccion
+            transaction = session.beginTransaction();
+
+            // Actualizo el item en la base de datos
+            session.update(data);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     @Override

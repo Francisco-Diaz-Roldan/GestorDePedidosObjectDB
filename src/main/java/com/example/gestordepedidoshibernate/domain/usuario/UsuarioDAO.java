@@ -5,21 +5,21 @@ import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UsuarioDAO implements DAO<Usuario> {
     //public Usuario loadUser(String email, String password) throws UsuarioIncorrectoException, PasswordIncorrectaException;
 
     @Override
     public ArrayList<Usuario> getAll() {
-        List<Usuario> salida = new ArrayList<Usuario>(0);
+        var salida = new ArrayList<Usuario>(0);
+
         try(Session s = HibernateUtils.getSessionFactory().openSession()){
             Query<Usuario> q = s.createQuery("from Usuario ",Usuario.class);
-            salida = q.getResultList();
+            salida = (ArrayList<Usuario>) q.getResultList();
         }
-        return (ArrayList<Usuario>) salida;
+
+        return salida;
     }
 
     @Override
