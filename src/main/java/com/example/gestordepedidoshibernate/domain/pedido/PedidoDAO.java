@@ -28,7 +28,8 @@ public class PedidoDAO implements DAO<Pedido> {
         try(Session session = HibernateUtils.getSessionFactory().openSession()){
             salida = session.get(Pedido.class, id);
         }
-        return salida;    }
+        return salida;
+    }
 
     @Override
     public Pedido save(Pedido data) {
@@ -78,5 +79,4 @@ public class PedidoDAO implements DAO<Pedido> {
             session.remove(pedido);
         });
     }
-    //public ArrayList<Pedido> loadAll(Integer id_pedido);
 }

@@ -60,13 +60,12 @@ public class UsuarioDAO implements DAO<Usuario> {
             try {
                 result = q.getSingleResult();
             } catch (NoResultException ex) {
-                // No se encontró ningún usuario con la combinación de email y contraseña
+                // En caso de que no se encuentre ningún usuario con la combinación de email y contraseña.
                 throw new UsuarioIncorrectoException("Usuario no encontrado");
             } catch (Exception ex) {
                 throw new PasswordIncorrectaException("La contraseña es incorrecta");
             }
         }
-
         return result;
     }
 

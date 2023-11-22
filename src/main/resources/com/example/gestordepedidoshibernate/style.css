@@ -9,6 +9,11 @@
     -fx-text-fill: #2D6281FF; /* Color del texto del botón en #2D6281FF */
 }
 
+#otrosBtn {
+    -fx-background-color: #2D6281FF; /* Color del texto del botón en #2D6281FF */
+    -fx-text-fill: white; /* Color de fondo del botón en blanco */
+}
+
 /* Estilo general para todas las etiquetas (Labels) */
 Label {
     -fx-text-fill: white; /* Color del texto en blanco */

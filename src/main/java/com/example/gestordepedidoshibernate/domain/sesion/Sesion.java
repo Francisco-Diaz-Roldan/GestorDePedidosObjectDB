@@ -24,6 +24,14 @@ public class Sesion {
 
     @Getter
     @Setter
+    private static Item item;
+
+    @Getter
+    @Setter
+    private static Producto producto;
+
+    @Getter
+    @Setter
     private static ArrayList<Pedido> pedidos = new ArrayList<>();
 
     @Getter

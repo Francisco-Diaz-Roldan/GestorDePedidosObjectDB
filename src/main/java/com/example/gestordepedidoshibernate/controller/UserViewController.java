@@ -1,9 +1,11 @@
 package com.example.gestordepedidoshibernate.controller;
 
 import com.example.gestordepedidoshibernate.HelloApplication;
+import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
 import com.example.gestordepedidoshibernate.domain.item.Item;
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 
+import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAO;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAO;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,8 +14,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -37,8 +44,13 @@ public class UserViewController implements Initializable {
     private TableColumn<Pedido, String> cUsuario; // Columna para mostrar el usuario relacionado con los pedidos.
     @javafx.fxml.FXML
     private TableColumn<Pedido, String> cTotal; // Columna para mostrar el total de los pedidos.
+    /*@javafx.fxml.FXML
+    private Button btnAdd;
+    @javafx.fxml.FXML
+    private Button btnDelete;*/
 
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
+    private final PedidoDAO pedidoDAO = new PedidoDAO(); //Creo una instancia de PedidoDAO.
 
 
 
@@ -87,6 +99,17 @@ public class UserViewController implements Initializable {
         tPedidos.getSelectionModel().selectedItemProperty().addListener((observableValue, pedido, t1) -> {
             Sesion.setPedido(t1);
         });
+
+        //Si le doy 2 veces al pedido realiza la acción del
+        tPedidos.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                Pedido selectedPedido = tPedidos.getSelectionModel().getSelectedItem();
+                if (selectedPedido != null) {
+                    Sesion.setPedido(selectedPedido);
+                    HelloApplication.loadFXMLDetails("details-view-controller.fxml");
+                }
+            }
+        });
     }
 
     private void cargarLista() {
@@ -120,5 +143,78 @@ public class UserViewController implements Initializable {
         alert.setHeaderText("Creado por");
         alert.setContentText("Francisco Díaz Roldán desde 2ºDAM");
         alert.showAndWait();
+    }
+
+    @javafx.fxml.FXML
+    public void addPedido(ActionEvent actionEvent) {
+        Pedido pedidoAnadido = new Pedido();
+
+        try (Session s = HibernateUtils.getSessionFactory().openSession()){
+            //Obtengo el último código de los pedidos
+            Query<String> q = s.createQuery("select max(p.codigo_pedido) from Pedido p", String.class);
+            String ultimoCodigoPedido = q.uniqueResult();
+
+            //Aumento en 1 el último código de los pedidos
+            int ultimoNumero = Integer.parseInt(ultimoCodigoPedido.substring(4));
+            int nuevoNumero =ultimoNumero+1;
+            String nuevoCodigoPedido = "PED-" + String.format("%03d", nuevoNumero);
+
+            //Establezcp el nuevo código en los pedidos
+            pedidoAnadido.setCodigo_pedido(nuevoCodigoPedido);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Establecer la fecha actual por defecto
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormat.format(new Date());
+        pedidoAnadido.setFecha(fechaActual);
+
+        pedidoAnadido.setUsuario(Sesion.getUsuario());
+        pedidoAnadido.setId_pedido(0);
+
+        if (pedidoAnadido.getItems().isEmpty()) {
+            pedidoAnadido.setTotal(0.0);
+        }
+
+        // Agregar el nuevo pedido a la lista observable
+        observablePedidos.add(pedidoAnadido);
+
+        // Actualizar la tabla
+        tPedidos.setItems(observablePedidos);
+        Sesion.setPedido((new PedidoDAO()).save(pedidoAnadido));
+        Sesion.setPedido(pedidoAnadido);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Enhorabuena");
+        alert.setHeaderText("El pedido se ha añadido correctamente");
+        alert.setContentText("El código del pedido es: " + Sesion.getPedido().getCodigo_pedido());
+        alert.showAndWait();
+
+        HelloApplication.loadFXMLDetails("details-view-controller.fxml");
+
+
+    }
+
+    @javafx.fxml.FXML
+    public void deletePedido(ActionEvent actionEvent) {
+        Pedido pedidoSeleccionado = tPedidos.getSelectionModel().getSelectedItem();
+
+        if (pedidoSeleccionado != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("¿De verdad que quieres borrar el pedido: " + pedidoSeleccionado.getCodigo_pedido()
+                    + "?");
+            var result = alert.showAndWait().get();
+
+            if (result.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                pedidoDAO.delete(pedidoSeleccionado);
+                observablePedidos.remove(pedidoSeleccionado);
+            }
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Por favor, selecciona el pedido a eliminar.");
+            alert.showAndWait();
+        }
     }
 }
