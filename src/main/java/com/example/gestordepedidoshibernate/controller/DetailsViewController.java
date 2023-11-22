@@ -120,5 +120,5 @@ public class DetailsViewController implements Initializable {
             alert.showAndWait();
         }
     }
-    }
+
 }
