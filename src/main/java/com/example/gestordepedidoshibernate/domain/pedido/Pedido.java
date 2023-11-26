@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa la entidad Pedido, la cual se mapea a la tabla "pedido" en la base de datos.
@@ -52,7 +53,7 @@ public class Pedido implements Serializable {
      * Lista de ítems incluidos en el pedido.
      */
     @OneToMany(mappedBy = "codigo_pedido", fetch = FetchType.EAGER)
-    private ArrayList<Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     /**
      * Devuelve una representación en cadena del objeto Pedido.

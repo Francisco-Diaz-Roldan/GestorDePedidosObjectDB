@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
         Usuario usuario = null;
 
         try {
-            usuario = (new UsuarioDAO().validateUser(usuarioEmail, password));
+            usuario = new UsuarioDAO().validateUser(usuarioEmail, password);
             Sesion.setUsuario(usuario);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

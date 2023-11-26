@@ -1,12 +1,12 @@
 package com.example.gestordepedidoshibernate.domain.usuario;
 
-import com.example.gestordepedidoshibernate.domain.excepciones.ErrorAccesoException;
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa a un usuario.
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
-    /** Identificador único del usuario. */
+    /** Id único del usuario. */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,21 +42,6 @@ public class Usuario implements Serializable {
     /** Lista de pedidos asociados al usuario. */
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-    private ArrayList<Pedido> pedidos = new ArrayList<>(0);
+    private List<Pedido> pedidos = new ArrayList<>(0);
 
-    /**
-     * Representación en cadena del objeto Usuario.
-     * @return Cadena que representa al usuario.
-     */
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id_usuario: " + id_usuario +
-                ", nombre: '" + nombre + '\'' +
-                ", pass: '" + pass + '\'' +
-                ", email: '" + email + '\'' +
-                ", pedidos: " + pedidos +
-                '}';
-    }
 }
