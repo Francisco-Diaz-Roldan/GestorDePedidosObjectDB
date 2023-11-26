@@ -14,10 +14,13 @@ import java.util.ArrayList;
 public class Pedido implements Serializable {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_pedido;           // Identificador único del pedido.
+
     @Column(name="fecha")
     private String fecha;                // Fecha de emisión del pedido.
+
     @Column(name = "total")
     private Double total;               // Total del pedido.
+
     @Column(name = "codigo_pedido") //La columna de referencia es la columna de la otra tabla de lo que quiero enlazar
     private String codigo_pedido;        // Código único asociado al pedido.
 
@@ -35,7 +38,7 @@ public class Pedido implements Serializable {
                 "id del pedido: " + id_pedido +
                 ", código del pedido: '" + codigo_pedido + '\'' +
                 ", fecha de emisión del pedido: '" + fecha + '\'' +
-                ", ID del usuario: " + usuario +
+                ", ID del usuario: " + usuario.getId_usuario() +
                 ", total: " + total +
                 ", ítems: " + items +
                 '}';

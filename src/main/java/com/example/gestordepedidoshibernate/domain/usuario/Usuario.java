@@ -1,7 +1,6 @@
 package com.example.gestordepedidoshibernate.domain.usuario;
 
-import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.excepciones.ErrorAccesoException;
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,10 +15,13 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_usuario;
+
     @Column(name="nombre")
     private String nombre;
+
     @Column(name = "pass")
     private String pass;
+
     @Column(name = "email")
     private String email;
 

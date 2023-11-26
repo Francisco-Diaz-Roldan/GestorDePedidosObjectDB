@@ -1,8 +1,7 @@
 package com.example.gestordepedidoshibernate.domain.usuario;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
-import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.excepciones.ErrorAccesoException;
 import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -21,7 +20,6 @@ public class UsuarioDAO implements DAO<Usuario> {
             Query<Usuario> q = s.createQuery("from Usuario ",Usuario.class);
             salida = (ArrayList<Usuario>) q.getResultList();
         }
-
         return salida;
     }
 
@@ -41,7 +39,6 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     @Override
     public void update(Usuario data) {
-
     }
 
     @Override
@@ -49,7 +46,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     }
 
-    public Usuario validateUser(String email, String pass) throws PasswordIncorrectaException, UsuarioIncorrectoException {
+    public Usuario validateUser(String email, String pass) throws ErrorAccesoException {
         Usuario result = null;
 
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
@@ -61,9 +58,7 @@ public class UsuarioDAO implements DAO<Usuario> {
                 result = q.getSingleResult();
             } catch (NoResultException ex) {
                 // En caso de que no se encuentre ningún usuario con la combinación de email y contraseña.
-                throw new UsuarioIncorrectoException("Usuario no encontrado");
-            } catch (Exception ex) {
-                throw new PasswordIncorrectaException("La contraseña es incorrecta");
+                throw new ErrorAccesoException("Usuario no encontrado");
             }
         }
         return result;

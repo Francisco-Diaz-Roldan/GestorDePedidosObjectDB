@@ -2,8 +2,7 @@ package com.example.gestordepedidoshibernate.controller;
 
 import com.example.gestordepedidoshibernate.HelloApplication;
 
-import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
+import com.example.gestordepedidoshibernate.domain.excepciones.ErrorAccesoException;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
 import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAO;
@@ -22,20 +21,16 @@ public class LoginController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private PasswordField txtPassword;
-    @FXML
-    private Button btnAcceder;
-    @FXML
-    private Label labelInfo;
 
 
     @FXML
     public void login(ActionEvent actionEvent) {
         String usuarioEmail = txtUsuario.getText();
         String password = txtPassword.getText();
+        Usuario usuario = null;
 
         try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            Usuario usuario = usuarioDAO.validateUser(usuarioEmail, password);
+            usuario = (new UsuarioDAO().validateUser(usuarioEmail, password));
             Sesion.setUsuario(usuario);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -46,25 +41,17 @@ public class LoginController implements Initializable {
 
             HelloApplication.loadFXMLUser("user-view.fxml");
 
-        } catch (PasswordIncorrectaException e) {
-            warningException("Contraseña incorrecta");
-
-        } catch (UsuarioIncorrectoException e) {
-            warningException("Usuario incorrecto");
-
+        } catch (ErrorAccesoException e) {
+            // Si ocurre un error debido a un usuario inexistente, muestra un mensaje de advertencia.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("¡Algo ha fallado!");
+            alert.setContentText("El usuario o no existe o no corresponde con la contraseña.");
+            alert.showAndWait();
+            System.out.println("Usuario no encontrado.");
         } catch (IOException e) {
-            warningException("Error de entrada/salida");
+            throw new RuntimeException(e);
         }
-    }
-
-    private void warningException(String mensaje) {
-        labelInfo.setText(mensaje);
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Error");
-        alert.setHeaderText(mensaje);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-        System.out.println(mensaje);
     }
 
     @Override

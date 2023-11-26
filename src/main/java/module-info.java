@@ -1,6 +1,7 @@
 module com.example.gestordepedidos {
     requires javafx.controls;
     requires javafx.fxml;
+
     requires java.sql;
     requires lombok;
     requires jakarta.persistence;
@@ -12,6 +13,7 @@ module com.example.gestordepedidos {
     opens com.example.gestordepedidoshibernate.domain.pedido;
     opens com.example.gestordepedidoshibernate.domain.producto;
     opens com.example.gestordepedidoshibernate.domain.usuario;
+
     opens com.example.gestordepedidoshibernate to javafx.fxml;
     opens com.example.gestordepedidoshibernate.controller to javafx.fxml;
 

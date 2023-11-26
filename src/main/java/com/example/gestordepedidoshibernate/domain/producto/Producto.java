@@ -11,10 +11,13 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_producto;
+
     @Column(name="nombre")
     private String nombre;
+
     @Column(name = "precio")
     private Double precio;
+
     @Column(name = "cantidad_disponible")
     private Integer cantidad_disponible;
 

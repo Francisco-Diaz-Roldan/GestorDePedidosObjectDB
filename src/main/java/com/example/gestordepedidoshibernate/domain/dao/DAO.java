@@ -1,9 +1,5 @@
 package com.example.gestordepedidoshibernate.domain.dao;
 
-import com.example.gestordepedidoshibernate.domain.excepciones.PasswordIncorrectaException;
-import com.example.gestordepedidoshibernate.domain.excepciones.UsuarioIncorrectoException;
-
-import java.sql.Array;
 import java.util.ArrayList;
 
 public interface DAO<T> {
