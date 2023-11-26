@@ -70,7 +70,11 @@ public class DetailsViewController implements Initializable {
         observableListItem.setAll(Sesion.getPedido().getItems());
         // Establezco la lista observable como el conjunto de elementos que se mostrarán en la tabla.
         tItem.setItems(observableListItem);
+
+        actualizarPedido();
     }
+
+
 
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
@@ -95,8 +99,7 @@ public class DetailsViewController implements Initializable {
     public void addItem(ActionEvent actionEvent) {
         var item = new Item();
         Sesion.setItem(item);
-        HelloApplication.loadFXMLItem("item-controller.fxml");
-
+        HelloApplication.loadFXMLItem("item-view.fxml");
     }
 
     @javafx.fxml.FXML
@@ -112,12 +115,44 @@ public class DetailsViewController implements Initializable {
             if (result.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                 itemDAO.delete(itemSeleccionado);
                 observableListItem.remove(itemSeleccionado);
+
+                //Calcula el nuevo total del pedido y lo actualiza en la Base de Datos.
+                Pedido pedidoActual = Sesion.getPedido();
+                Double nuevoTotal = calcularTotal(pedidoActual) - (itemSeleccionado.getProducto().getPrecio() *
+                        itemSeleccionado.getCantidad()) ;
+                System.out.println(nuevoTotal);
+                pedidoActual.setTotal(nuevoTotal);
+
+                //Actualiza el total del pedido en la Base de Datos
+                PedidoDAO pedidoDAO = new PedidoDAO();
+                pedidoDAO.update(pedidoActual);
             }
         } else {
-
+            //Muestra un mensaje de error o advertencia al usuario si no se ha seleccionado ningún pedido para eliminar.
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Por favor, selecciona el pedido a eliminar.");
+            alert.setContentText("Selecciona el item a eliminar.");
             alert.showAndWait();
+        }
+    }
+
+    private Double calcularTotal(Pedido pedidoActual) {
+        Double total = 0.0;
+
+        for (Item items : pedidoActual.getItems()){
+            total += items.getProducto().getPrecio() * items.getCantidad();
+        }
+        return total;
+    }
+
+    private void actualizarPedido() {
+        Pedido pedidoActual = Sesion.getPedido();
+        Double totalActual = calcularTotal(pedidoActual);
+
+        try {
+            PedidoDAO pedidoDAO = new PedidoDAO();
+            pedidoDAO.update(pedidoActual);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 

@@ -30,6 +30,11 @@ Label {
     -fx-text-fill: red;/* Color del texto en rojo */
 }
 
+#labelInfoCantidad {
+    -fx-font-size: 16; /* Tamaño de fuente 16 */
+    -fx-text-fill: #f9fbff;/* Color del texto en blanco */
+}
+
 /* Estilo para la barra de menú */
 #menuBar {
     -fx-background-color: transparent; /* Fondo transparente */
