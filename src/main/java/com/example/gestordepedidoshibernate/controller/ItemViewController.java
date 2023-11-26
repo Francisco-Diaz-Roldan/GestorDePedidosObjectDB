@@ -1,4 +1,93 @@
 package com.example.gestordepedidoshibernate.controller;
 
-public class ItemViewController {
+import com.example.gestordepedidoshibernate.HelloApplication;
+import com.example.gestordepedidoshibernate.domain.item.Item;
+import com.example.gestordepedidoshibernate.domain.item.ItemDAO;
+import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
+import com.example.gestordepedidoshibernate.domain.producto.Producto;
+import com.example.gestordepedidoshibernate.domain.producto.ProductoDAO;
+import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ItemViewController implements Initializable {
+    @javafx.fxml.FXML
+    private Label labelInfoCantidad;
+    @javafx.fxml.FXML
+    private Spinner<Integer> spCantidad;
+    @javafx.fxml.FXML
+    private ComboBox<Producto> comboProducto;
+    private ObservableList<Producto>observableListProductos;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        observableListProductos = FXCollections.observableArrayList();
+        ProductoDAO productoDAO = new ProductoDAO();
+        observableListProductos.setAll(productoDAO.getAll());
+        comboProducto.setItems(observableListProductos);
+        comboProducto.getSelectionModel().selectFirst();
+        spCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1, 1));
+        labelInfoCantidad.setText("Cantidad disponible: " + comboProducto.getSelectionModel().getSelectedItem().getCantidad_disponible());
+        comboProducto.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                labelInfoCantidad.setText("Cantidad disponible: " + newValue.getCantidad_disponible());
+            }
+        });
+    }
+
+    @Deprecated
+    public void add(ActionEvent actionEvent) {
+
+        //Se crea una instancia de Pedido con el pedido actual de la sesión.
+        Pedido pedido = Sesion.getPedido();
+
+        //Si el pedido es distinto de nulo se crea un nuevo item para ese pedido  y se retorna a la ventana de DetallesPedidoController.
+        Producto productoSeleccionado = comboProducto.getSelectionModel().getSelectedItem();
+        Integer cantidadAgregada = spCantidad.getValue();
+        Integer cantidadDisponible = productoSeleccionado.getCantidad_disponible();
+
+        if (cantidadAgregada > cantidadDisponible) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Cantidad no disponible");
+            alert.setHeaderText("No es posible seleccionar esa cantidad de producto");
+            alert.setContentText("Cantidad de producto disponible: " + productoSeleccionado.getCantidad_disponible());
+            alert.showAndWait();
+        } else {
+            Item item = new Item();
+            item.setCodigo_pedido(pedido);
+            item.setCantidad(spCantidad.getValue());
+            item.setProducto(productoSeleccionado);
+
+            Sesion.setItem((new ItemDAO()).save(item));
+            Sesion.setItem(item);
+
+            HelloApplication.loadFXMLDetails("details-view.fxml");
+        }
+    }
+    public void salir(ActionEvent actionEvent) {
+        Sesion.setUsuario(null);
+        HelloApplication.loadFXMLLogin("login.fxml");
+    }
+
+
+    public void volverAtras(ActionEvent actionEvent) throws IOException {
+        HelloApplication.loadFXMLUser("details-view.fxml");
+    }
+
+
+    public void mostrarAcercaDe(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Acerca de ");
+        alert.setHeaderText("Creado por ");
+        alert.setContentText("Francisco Díaz Roldán desde 2ºDAM");
+        alert.showAndWait();
+    }
 }
