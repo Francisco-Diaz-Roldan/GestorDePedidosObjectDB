@@ -54,13 +54,14 @@ public class PedidoDAO implements DAO<Pedido> {
      */
     @Override
     public Pedido save(Pedido data) {
-        try (org.hibernate.Session s = HibernateUtils.getSessionFactory().openSession()) {
-            Transaction t = s.beginTransaction();
+        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction t = null;
             try {
-                s.persist(data);
+                t = s.beginTransaction();
+                s.save(data);
                 t.commit();
             } catch (Exception e) {
-                if (t != null && t.isActive()) {
+                if (t != null) {
                     t.rollback();
                 }
                 e.printStackTrace();
@@ -104,7 +105,7 @@ public class PedidoDAO implements DAO<Pedido> {
      */
     @Override
     public void delete(Pedido data) {
-        HibernateUtils.getSessionFactory().inTransaction((session) -> {
+        HibernateUtils.getSessionFactory().inTransaction(session -> {
             Pedido pedido = session.get(Pedido.class, data.getId_pedido());
             session.remove(pedido);
         });

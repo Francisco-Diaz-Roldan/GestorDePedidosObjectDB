@@ -211,10 +211,10 @@ public class UserViewController implements Initializable {
             pedidoAnadido.setTotal(0.0);
         }
 
-        // Agregar el nuevo pedido a la lista observable
+        // Añado el nuevo pedido a la lista observable
         observablePedidos.add(pedidoAnadido);
 
-        // Actualizar la tabla
+        // Actualizo la tabla de pedidos
         tPedidos.setItems(observablePedidos);
         Sesion.setPedido((new PedidoDAO()).save(pedidoAnadido));
         Sesion.setPedido(pedidoAnadido);
@@ -225,7 +225,7 @@ public class UserViewController implements Initializable {
         alert.setContentText("El código del pedido es: " + Sesion.getPedido().getCodigo_pedido());
         alert.showAndWait();
 
-        HelloApplication.loadFXMLDetails("details-view-controller.fxml");
+        HelloApplication.loadFXMLDetails("details-view.fxml");
 
 
     }
