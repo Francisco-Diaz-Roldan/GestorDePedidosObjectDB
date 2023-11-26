@@ -109,7 +109,7 @@ public class UserViewController implements Initializable {
                 Pedido selectedPedido = tPedidos.getSelectionModel().getSelectedItem();
                 if (selectedPedido != null) {
                     Sesion.setPedido(selectedPedido);
-                    HelloApplication.loadFXMLDetails("details-view-controller.fxml");
+                    HelloApplication.loadFXMLDetails("details-view.fxml");
                 }
             }
         });

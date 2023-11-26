@@ -70,7 +70,7 @@ public class ItemViewController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Cantidad no disponible");
             alert.setHeaderText("No es posible seleccionar esa cantidad de producto");
-            alert.setContentText("Cantidad de producto disponible: " + productoSeleccionado.getCantidad_disponible());
+            alert.setContentText("Unidades disponibles : " + productoSeleccionado.getCantidad_disponible());
             alert.showAndWait();
         } else {
             Item item = new Item();

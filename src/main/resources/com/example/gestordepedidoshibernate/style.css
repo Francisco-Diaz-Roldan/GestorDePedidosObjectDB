@@ -132,6 +132,30 @@ Label {
     -fx-background-color: transparent;
 }
 
+/* Desactivar cambio de color al hacer clic en celdas */
+.table-view .table-row-cell:filled:selected,
+.table-view .table-row-cell:filled:hover,
+.table-view .column-header:hover {
+    -fx-background-color: transparent;
+    -fx-text-background-color: -fx-text-inner-color;
+}
+
+/* Desactivar el cambio de color en el texto de las celdas al hacer clic */
+.table-view .table-cell:filled:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-inner-color;
+}
+/*Estilo para filas seleccionadas cuando el ratón se encuentra sobre ellas*/
+.table-view:row-selection .table-row-cell:filled:selected:hover {
+    -fx-background-color: white; /* Cambiado a blanco para evitar cambio de color */
+    -fx-text-background-color: #2a5c7a;
+}
+
+/*Estilo para filas seleccionadas por el usuario*/
+.table-view:row-selection .table-row-cell:filled:selected {
+    -fx-background-color: white; /* Cambiado a blanco para evitar cambio de color */
+}
+
 /*Estilo para cambiar el tipo de fuente*/
 * {
     -fx-font-family: "Constantia"; /* Cambia el tipo de fuente a "Constantia"*/
