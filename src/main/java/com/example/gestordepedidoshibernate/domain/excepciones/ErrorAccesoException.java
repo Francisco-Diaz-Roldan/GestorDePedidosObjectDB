@@ -1,12 +1,14 @@
 package com.example.gestordepedidoshibernate.domain.excepciones;
+
 /**
- * Excepción personalizada lanzada cuando se detecta una contraseña incorrecta durante un proceso de autenticación.
+ * Excepción personalizada para representar errores relacionados con el acceso, como credenciales incorrectas.
  */
 public class ErrorAccesoException extends Exception {
+
     /**
-     * Constructor de la excepción que recibe un mensaje de error personalizado.
+     * Constructor que permite especificar un mensaje de error.
      *
-     * @param msg Se refiere al mensaje que describe la razón de la excepción (contraseña incorrecta).
+     * @param msg Mensaje descriptivo del error.
      */
     public ErrorAccesoException(String msg) {
         super(msg);

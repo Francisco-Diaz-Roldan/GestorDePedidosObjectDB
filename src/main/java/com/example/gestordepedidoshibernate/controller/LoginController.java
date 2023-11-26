@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la vista de inicio de sesión.
+ */
 public class LoginController implements Initializable {
 
     @FXML
@@ -22,7 +25,11 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField txtPassword;
 
-
+    /**
+     * Método para manejar el evento de inicio de sesión.
+     *
+     * @param actionEvent Evento de acción que desencadena el intento de inicio de sesión.
+     */
     @FXML
     public void login(ActionEvent actionEvent) {
         String usuarioEmail = txtUsuario.getText();
@@ -54,7 +61,14 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Método que se llama automáticamente al cargar la interfaz gráfica.
+     *
+     * @param url            La ubicación del archivo FXML.
+     * @param resourceBundle Recursos específicos del idioma.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Puedes realizar inicializaciones aquí si es necesario.
     }
 }

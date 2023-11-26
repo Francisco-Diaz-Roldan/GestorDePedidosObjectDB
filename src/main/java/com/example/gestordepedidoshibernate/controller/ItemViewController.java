@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para la vista de gestión de ítems.
+ */
 public class ItemViewController implements Initializable {
     @javafx.fxml.FXML
     private Label labelInfoCantidad;
@@ -24,9 +27,14 @@ public class ItemViewController implements Initializable {
     private Spinner<Integer> spCantidad;
     @javafx.fxml.FXML
     private ComboBox<Producto> comboProducto;
-    private ObservableList<Producto>observableListProductos;
+    private ObservableList<Producto> observableListProductos;
 
-
+    /**
+     * Inicializa la vista de gestión de ítems.
+     *
+     * @param url            La ubicación del archivo FXML.
+     * @param resourceBundle Recursos específicos del idioma.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableListProductos = FXCollections.observableArrayList();
@@ -43,13 +51,17 @@ public class ItemViewController implements Initializable {
         });
     }
 
-    @Deprecated
+    /**
+     * Método para agregar un ítem al pedido.
+     *
+     * @param actionEvent Evento de acción que desencadena la adición de un nuevo ítem.
+     */
     public void add(ActionEvent actionEvent) {
 
-        //Se crea una instancia de Pedido con el pedido actual de la sesión.
+        // Se crea una instancia de Pedido con el pedido actual de la sesión.
         Pedido pedido = Sesion.getPedido();
 
-        //Si el pedido es distinto de nulo se crea un nuevo item para ese pedido  y se retorna a la ventana de DetallesPedidoController.
+        // Si el pedido es distinto de nulo se crea un nuevo item para ese pedido y se retorna a la ventana de DetallesPedidoController.
         Producto productoSeleccionado = comboProducto.getSelectionModel().getSelectedItem();
         Integer cantidadAgregada = spCantidad.getValue();
         Integer cantidadDisponible = productoSeleccionado.getCantidad_disponible();
@@ -72,17 +84,32 @@ public class ItemViewController implements Initializable {
             HelloApplication.loadFXMLDetails("details-view.fxml");
         }
     }
+
+    /**
+     * Método para salir de la sesión.
+     *
+     * @param actionEvent Evento de acción que desencadena la salida.
+     */
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
-
+    /**
+     * Método para volver atrás en la aplicación.
+     *
+     * @param actionEvent Evento de acción que desencadena el retorno.
+     * @throws IOException Excepción de entrada/salida.
+     */
     public void volverAtras(ActionEvent actionEvent) throws IOException {
         HelloApplication.loadFXMLUser("details-view.fxml");
     }
 
-
+    /**
+     * Muestra información acerca del creador de la aplicación.
+     *
+     * @param actionEvent Evento de acción que desencadena la visualización de la información.
+     */
     public void mostrarAcercaDe(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acerca de ");

@@ -9,43 +9,75 @@ import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que implementa operaciones de acceso a datos (DAO) para la entidad Usuario.
+ */
 public class UsuarioDAO implements DAO<Usuario> {
-    //public Usuario loadUser(String email, String password) throws UsuarioIncorrectoException, PasswordIncorrectaException;
 
+    /**
+     * Obtiene todos los usuarios almacenados en la base de datos.
+     * @return Lista de usuarios.
+     */
     @Override
     public ArrayList<Usuario> getAll() {
         var salida = new ArrayList<Usuario>(0);
 
-        try(Session s = HibernateUtils.getSessionFactory().openSession()){
-            Query<Usuario> q = s.createQuery("from Usuario ",Usuario.class);
+        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
+            Query<Usuario> q = s.createQuery("from Usuario ", Usuario.class);
             salida = (ArrayList<Usuario>) q.getResultList();
         }
         return salida;
     }
 
+    /**
+     * Obtiene un usuario por su identificador único.
+     * @param id Identificador único del usuario.
+     * @return Usuario encontrado o un objeto Usuario vacío si no se encuentra.
+     */
     @Override
     public Usuario get(Integer id) {
         var salida = new Usuario();
-        try(Session session = HibernateUtils.getSessionFactory().openSession()){
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             salida = session.get(Usuario.class, id);
         }
         return salida;
     }
 
+    /**
+     * Guarda un nuevo usuario en la base de datos.
+     * @param data Usuario a guardar.
+     * @return Usuario guardado.
+     */
     @Override
     public Usuario save(Usuario data) {
-        return null;
+        return null; // Implementar lógica de guardado si es necesario.
     }
 
+    /**
+     * Actualiza la información de un usuario en la base de datos.
+     * @param data Usuario con la información actualizada.
+     */
     @Override
     public void update(Usuario data) {
+        // Implementar lógica de actualización si es necesario.
     }
 
+    /**
+     * Elimina un usuario de la base de datos.
+     * @param data Usuario a eliminar.
+     */
     @Override
     public void delete(Usuario data) {
-
+        // Implementar lógica de eliminación si es necesario.
     }
 
+    /**
+     * Valida las credenciales de un usuario.
+     * @param email Correo electrónico del usuario.
+     * @param pass Contraseña del usuario.
+     * @return Usuario validado.
+     * @throws ErrorAccesoException Excepción lanzada en caso de error de acceso.
+     */
     public Usuario validateUser(String email, String pass) throws ErrorAccesoException {
         Usuario result = null;
 
@@ -63,8 +95,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         }
         return result;
     }
-
-
+}
     /*public Usuario validateUser(String email, String pass) {
         Usuario result = null;
 
@@ -81,4 +112,4 @@ public class UsuarioDAO implements DAO<Usuario> {
         }
         return result;
     }*/
-}
+

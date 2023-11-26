@@ -44,15 +44,18 @@ public class UserViewController implements Initializable {
     private TableColumn<Pedido, String> cUsuario; // Columna para mostrar el usuario relacionado con los pedidos.
     @javafx.fxml.FXML
     private TableColumn<Pedido, String> cTotal; // Columna para mostrar el total de los pedidos.
-    /*@javafx.fxml.FXML
-    private Button btnAdd;
-    @javafx.fxml.FXML
-    private Button btnDelete;*/
+
 
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
     private final PedidoDAO pedidoDAO = new PedidoDAO(); //Creo una instancia de PedidoDAO.
 
-
+    /**
+     * Inicializa la vista principal del usuario.
+     * Configura las columnas de la tabla de pedidos, muestra el nombre del usuario y carga la lista de pedidos.
+     *
+     * @param url            La ubicación del archivo FXML.
+     * @param resourceBundle Recursos específicos del idioma.
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,6 +115,10 @@ public class UserViewController implements Initializable {
         });
     }
 
+    /**
+     * Carga la lista de pedidos para el usuario actual y actualiza la tabla.
+     */
+
     private void cargarLista() {
         observablePedidos.setAll(Sesion.getUsuario().getPedidos());
         for (Pedido pedidos : observablePedidos) {
@@ -120,6 +127,13 @@ public class UserViewController implements Initializable {
         }
         tPedidos.setItems(observablePedidos);
     }
+
+    /**
+     * Calcula el total de los pedidos sumando los precios de los productos.
+     *
+     * @param pedido El pedido para el cual se calcula el total.
+     * @return El total calculado.
+     */
 
     private Double calcularTotalPedidos(Pedido pedido) {
         Double total  = 0.0;
@@ -130,12 +144,22 @@ public class UserViewController implements Initializable {
         return total;
     }
 
+    /**
+     * Maneja el evento de salir, cerrando la sesión del usuario.
+     *
+     * @param actionEvent Evento de acción que desencadena el cierre de sesión.
+     */
 
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
+    /**
+     * Muestra información sobre el creador de la aplicación.
+     *
+     * @param actionEvent Evento de acción que desencadena la visualización de información.
+     */
 
     public void mostrarAcercaDe(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -144,6 +168,12 @@ public class UserViewController implements Initializable {
         alert.setContentText("Francisco Díaz Roldán desde 2ºDAM");
         alert.showAndWait();
     }
+
+    /**
+     * Añade un nuevo pedido y carga la vista de detalles del pedido.
+     *
+     * @param actionEvent Evento de acción que desencadena la creación de un nuevo pedido.
+     */
 
     @javafx.fxml.FXML
     public void addPedido(ActionEvent actionEvent) {
@@ -195,6 +225,12 @@ public class UserViewController implements Initializable {
 
 
     }
+
+    /**
+     * Elimina el pedido seleccionado.
+     *
+     * @param actionEvent Evento de acción que desencadena la eliminación del pedido.
+     */
 
     @javafx.fxml.FXML
     public void deletePedido(ActionEvent actionEvent) {

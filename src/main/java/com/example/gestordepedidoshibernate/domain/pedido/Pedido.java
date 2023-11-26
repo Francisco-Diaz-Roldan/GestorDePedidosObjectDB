@@ -8,30 +8,57 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Clase que representa la entidad Pedido, la cual se mapea a la tabla "pedido" en la base de datos.
+ */
 @Data
 @Entity
 @Table(name = "pedido")
 public class Pedido implements Serializable {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pedido;           // Identificador único del pedido.
 
-    @Column(name="fecha")
-    private String fecha;                // Fecha de emisión del pedido.
+    /**
+     * Identificador único del pedido.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_pedido;
 
+    /**
+     * Fecha de emisión del pedido.
+     */
+    @Column(name = "fecha")
+    private String fecha;
+
+    /**
+     * Total del pedido.
+     */
     @Column(name = "total")
-    private Double total;               // Total del pedido.
+    private Double total;
 
-    @Column(name = "codigo_pedido") //La columna de referencia es la columna de la otra tabla de lo que quiero enlazar
-    private String codigo_pedido;        // Código único asociado al pedido.
+    /**
+     * Código único asociado al pedido.
+     */
+    @Column(name = "codigo_pedido")
+    private String codigo_pedido;
 
+    /**
+     * Usuario que realizó el pedido.
+     */
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id_usuario")
-    private Usuario usuario;             // Identificador del usuario que realizó el pedido.
+    private Usuario usuario;
 
+    /**
+     * Lista de ítems incluidos en el pedido.
+     */
     @OneToMany(mappedBy = "codigo_pedido", fetch = FetchType.EAGER)
-    private ArrayList<Item> items = new ArrayList<>();        // Lista de ítems incluidos en el pedido.
+    private ArrayList<Item> items = new ArrayList<>();
 
-
+    /**
+     * Devuelve una representación en cadena del objeto Pedido.
+     *
+     * @return Una cadena que representa el objeto Pedido.
+     */
     @Override
     public String toString() {
         return "Pedido{" +

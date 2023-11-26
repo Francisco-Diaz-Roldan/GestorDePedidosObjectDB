@@ -9,14 +9,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 /**
  * La clase HelloApplication extiende la clase Application de JavaFX y sirve como punto de entrada para la aplicación.
  * Esta clase se encarga de la gestión de ventanas y escenas en la aplicación JavaFX.
  */
 public class HelloApplication extends Application {
     private static Stage miStage;
-
 
     /**
      * Método start que inicia la aplicación JavaFX y muestra la ventana principal con la escena de inicio.
@@ -79,6 +77,12 @@ public class HelloApplication extends Application {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Método estático para cargar una escena de items en la ventana principal.
+     *
+     * @param escena El nombre del archivo FXML que representa la escena de items a cargar.
+     */
     public static void loadFXMLItem(String escena) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(escena));

@@ -19,7 +19,9 @@ import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/**
+ * Controlador para la vista de detalles de pedidos.
+ */
 public class DetailsViewController implements Initializable {
     @javafx.fxml.FXML
     private TableColumn<Item, String> cIdItem;
@@ -35,7 +37,12 @@ public class DetailsViewController implements Initializable {
     private ObservableList<Item> observableListItem;
     private ItemDAO itemDAO = new ItemDAO();
 
-
+    /**
+     * Inicializa la vista de detalles de pedidos.
+     *
+     * @param url            La ubicación del archivo FXML.
+     * @param resourceBundle Recursos específicos del idioma.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Configuración de las columnas de la tabla y carga de datos.
@@ -63,7 +70,7 @@ public class DetailsViewController implements Initializable {
         // Creo una lista observable para contener los elementos (detalles de pedidos) que se mostrarán en la tabla.
         observableListItem = FXCollections.observableArrayList();
 
-       Sesion.setPedido((new PedidoDAO()).get(Sesion.getPedido().getId_pedido()));
+        Sesion.setPedido((new PedidoDAO()).get(Sesion.getPedido().getId_pedido()));
         System.out.println(Sesion.getPedido());
         System.out.println(Sesion.getItems());
         // Agrego los detalles de los pedidos (items) cargados previamente a la lista observable.
@@ -74,19 +81,34 @@ public class DetailsViewController implements Initializable {
         actualizarPedido();
     }
 
-
-
+    /**
+     * Método para salir de la sesión.
+     *
+     * @param actionEvent Evento de acción que desencadena la salida.
+     */
+    @javafx.fxml.FXML
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
-
+    /**
+     * Método para volver atrás en la aplicación.
+     *
+     * @param actionEvent Evento de acción que desencadena el retorno.
+     * @throws IOException Excepción de entrada/salida.
+     */
+    @javafx.fxml.FXML
     public void volverAtras(ActionEvent actionEvent) throws IOException {
         HelloApplication.loadFXMLUser("user-view.fxml");
     }
 
-
+    /**
+     * Muestra información acerca del creador de la aplicación.
+     *
+     * @param actionEvent Evento de acción que desencadena la visualización de la información.
+     */
+    @javafx.fxml.FXML
     public void mostrarAcercaDe(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acerca de ");
@@ -95,6 +117,11 @@ public class DetailsViewController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Añade un nuevo ítem al pedido.
+     *
+     * @param actionEvent Evento de acción que desencadena la adición de un nuevo ítem.
+     */
     @javafx.fxml.FXML
     public void addItem(ActionEvent actionEvent) {
         var item = new Item();
@@ -102,6 +129,11 @@ public class DetailsViewController implements Initializable {
         HelloApplication.loadFXMLItem("item-view.fxml");
     }
 
+    /**
+     * Elimina un ítem del pedido.
+     *
+     * @param actionEvent Evento de acción que desencadena la eliminación de un ítem.
+     */
     @javafx.fxml.FXML
     public void deleteItem(ActionEvent actionEvent) {
         Item itemSeleccionado = tItem.getSelectionModel().getSelectedItem();
@@ -116,34 +148,43 @@ public class DetailsViewController implements Initializable {
                 itemDAO.delete(itemSeleccionado);
                 observableListItem.remove(itemSeleccionado);
 
-                //Calcula el nuevo total del pedido y lo actualiza en la Base de Datos.
+                // Calcula el nuevo total del pedido y lo actualiza en la Base de Datos.
                 Pedido pedidoActual = Sesion.getPedido();
                 Double nuevoTotal = calcularTotal(pedidoActual) - (itemSeleccionado.getProducto().getPrecio() *
-                        itemSeleccionado.getCantidad()) ;
+                        itemSeleccionado.getCantidad());
                 System.out.println(nuevoTotal);
                 pedidoActual.setTotal(nuevoTotal);
 
-                //Actualiza el total del pedido en la Base de Datos
+                // Actualiza el total del pedido en la Base de Datos
                 PedidoDAO pedidoDAO = new PedidoDAO();
                 pedidoDAO.update(pedidoActual);
             }
         } else {
-            //Muestra un mensaje de error o advertencia al usuario si no se ha seleccionado ningún pedido para eliminar.
+            // Muestra un mensaje de error o advertencia al usuario si no se ha seleccionado ningún pedido para eliminar.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Selecciona el item a eliminar.");
             alert.showAndWait();
         }
     }
 
+    /**
+     * Calcula el total de un pedido.
+     *
+     * @param pedidoActual Pedido del cual calcular el total.
+     * @return Total calculado del pedido.
+     */
     private Double calcularTotal(Pedido pedidoActual) {
         Double total = 0.0;
 
-        for (Item items : pedidoActual.getItems()){
+        for (Item items : pedidoActual.getItems()) {
             total += items.getProducto().getPrecio() * items.getCantidad();
         }
         return total;
     }
 
+    /**
+     * Actualiza la información del pedido en la base de datos.
+     */
     private void actualizarPedido() {
         Pedido pedidoActual = Sesion.getPedido();
         Double totalActual = calcularTotal(pedidoActual);
@@ -151,9 +192,8 @@ public class DetailsViewController implements Initializable {
         try {
             PedidoDAO pedidoDAO = new PedidoDAO();
             pedidoDAO.update(pedidoActual);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 }
