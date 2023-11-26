@@ -2,12 +2,10 @@ package com.example.gestordepedidoshibernate.domain.item;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
 import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 

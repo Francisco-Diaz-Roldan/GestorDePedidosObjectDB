@@ -30,9 +30,9 @@
                   </ImageView>
                </children>
             </FlowPane>
-            <FlowPane alignment="CENTER" hgap="40.0">
+            <FlowPane alignment="CENTER" hgap="55.0">
                <children>
-                  <Label id="labelUsuario" text="Usuario">
+                  <Label id="labelUsuario" text="Email">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>

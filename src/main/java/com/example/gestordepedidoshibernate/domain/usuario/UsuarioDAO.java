@@ -81,6 +81,9 @@ public class UsuarioDAO implements DAO<Usuario> {
     public Usuario validateUser(String email, String pass) throws ErrorAccesoException {
         Usuario result = null;
 
+        if (HibernateUtils.getSessionFactory() == null) {
+            throw new ErrorAccesoException("Error en la inicialización de la SessionFactory");
+        }
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             Query<Usuario> q = session.createQuery("from Usuario where email=:e and pass=:p", Usuario.class);
             q.setParameter("e", email);

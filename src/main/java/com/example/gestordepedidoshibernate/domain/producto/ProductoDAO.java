@@ -3,7 +3,6 @@ package com.example.gestordepedidoshibernate.domain.producto;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
 import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 

@@ -42,4 +42,3 @@ public class HibernateUtils {
         return sf;
     }
 }
-
