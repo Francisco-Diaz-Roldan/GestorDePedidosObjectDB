@@ -13,7 +13,7 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtils {
 
     /**
-     * Factoría de sesiones de Hibernate.
+     * Session Factory de Hibernate.
      */
     private static SessionFactory sf;
 
@@ -22,12 +22,19 @@ public class HibernateUtils {
      */
     static {
         try {
+            // Crea una instancia de Configuration, que se utiliza para configurar Hibernate.
             Configuration configuration = new Configuration();
+
+            // Carga la configuración de Hibernate desde el archivo hibernate.cfg.xml (por convención).
             configuration.configure();
+
+            // Construye la SessionFactory utilizando la configuración proporcionada.
             sf = configuration.buildSessionFactory();
 
+            // Imprime un mensaje de éxito en el log.
             log.info("¡SessionFactory creada con éxito!");
         } catch(Exception e){
+            // Imprime un mensaje de error en el log si hay algún problema al crear la SessionFactory.
             log.severe("Error al inicializar la SessionFactory: " + e.getMessage());
             e.printStackTrace();
         }

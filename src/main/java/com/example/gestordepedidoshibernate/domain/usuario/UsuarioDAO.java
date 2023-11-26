@@ -22,10 +22,18 @@ public class UsuarioDAO implements DAO<Usuario> {
     public ArrayList<Usuario> getAll() {
         var salida = new ArrayList<Usuario>(0);
 
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
-            Query<Usuario> q = s.createQuery("from Usuario ", Usuario.class);
+        // Abre una sesión de Hibernate.
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los registros de Usuario.
+            Query<Usuario> q = session.createQuery("from Usuario", Usuario.class);
+
+            // Obtiene la lista de resultados.
             salida = (ArrayList<Usuario>) q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        // Retorna la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
 
@@ -37,9 +45,15 @@ public class UsuarioDAO implements DAO<Usuario> {
     @Override
     public Usuario get(Integer id) {
         var salida = new Usuario();
+        // Crea una sesión de Hibernate.
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            // Utiliza el método `get` de Hibernate para obtener el objeto Usuario por su identificador.
             salida = session.get(Usuario.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        // Devuelve el objeto Usuario obtenido por su identificador.
         return salida;
     }
 
@@ -50,7 +64,7 @@ public class UsuarioDAO implements DAO<Usuario> {
      */
     @Override
     public Usuario save(Usuario data) {
-        return null; // Implementar lógica de guardado si es necesario.
+        return null; // Implementa la lógica de guardado si es necesario.
     }
 
     /**
@@ -58,9 +72,8 @@ public class UsuarioDAO implements DAO<Usuario> {
      * @param data Usuario con la información actualizada.
      */
     @Override
-    public void update(Usuario data) {
-        // Implementar lógica de actualización si es necesario.
-    }
+    public void update(Usuario data) {// Implementa la lógica de actualización si es necesario.
+         }
 
     /**
      * Elimina un usuario de la base de datos.
@@ -68,7 +81,7 @@ public class UsuarioDAO implements DAO<Usuario> {
      */
     @Override
     public void delete(Usuario data) {
-        // Implementar lógica de eliminación si es necesario.
+        // Implementa la lógica de eliminación si es necesario.
     }
 
     /**
@@ -81,15 +94,19 @@ public class UsuarioDAO implements DAO<Usuario> {
     public Usuario validateUser(String email, String pass) throws ErrorAccesoException {
         Usuario result = null;
 
+        // Verifica si la SessionFactory está inicializada.
         if (HibernateUtils.getSessionFactory() == null) {
             throw new ErrorAccesoException("Error en la inicialización de la SessionFactory");
         }
 
+        // Abre una sesión de Hibernate.
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            // Crea una consulta HQL (Hibernate Query Language) para obtener un usuario por email y contraseña.
             Query<Usuario> q = session.createQuery("from Usuario where email=:e and pass=:p", Usuario.class);
             q.setParameter("e", email);
             q.setParameter("p", pass);
 
+            // Intenta obtener un resultado único.
             try {
                 result = q.getSingleResult();
             } catch (NoResultException ex) {
@@ -97,8 +114,11 @@ public class UsuarioDAO implements DAO<Usuario> {
                 throw new ErrorAccesoException("Usuario no encontrado");
             }
         }
+
+        // Devuelve el resultado (puede ser null si no se encuentra un usuario).
         return result;
     }
+
 }
     /*public Usuario validateUser(String email, String pass) {
         Usuario result = null;

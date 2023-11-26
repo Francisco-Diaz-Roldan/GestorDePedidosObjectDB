@@ -20,15 +20,21 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public ArrayList<Producto> getAll() {
+        // Crea una lista para almacenar los resultados.
         var salida = new ArrayList<Producto>(0);
 
+        // Abre una sesión de Hibernate.
         try (Session s = HibernateUtils.getSessionFactory().openSession()) {
+            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los objetos Producto.
             Query<Producto> q = s.createQuery("from Producto", Producto.class);
+
+            // Ejecuta la consulta y asigna los resultados a la lista de salida.
             salida = (ArrayList<Producto>) q.getResultList();
         }
-
+        // Devuelve la lista de resultados.
         return salida;
     }
+
 
     /**
      * Obtiene un producto específico por su identificador único.
@@ -38,8 +44,8 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public Producto get(Integer id) {
-        // En este método, puedes implementar la lógica para obtener un producto por su ID.
-        // Devuelve el producto o null si no se encuentra.
+        // En este método, se puede implementar la lógica para obtener un producto por su ID.
+        //Aunque en esta ocasión no hace nada.
         return null;
     }
 
@@ -51,8 +57,8 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public Producto save(Producto data) {
-        // En este método, puedes implementar la lógica para guardar un nuevo producto en la base de datos.
-        // Devuelve el producto guardado.
+        // En este método, se puede implementar la lógica para guardar un nuevo producto en la base de datos.
+        //Aunque en esta ocasión no hace nada.
         return null;
     }
 
@@ -63,7 +69,7 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public void update(Producto data) {
-        // En este método, puedes implementar la lógica para actualizar la información de un producto en la base de datos.
+        // En este método, se puede implementar la lógica para actualizar la información de un producto en la base de datos.
     }
 
     /**
@@ -73,6 +79,6 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public void delete(Producto data) {
-        // En este método, puedes implementar la lógica para eliminar un producto de la base de datos.
+        // En este método, puedes implementar la lógica para eliminar un producto de la base de datos. Aunque por el momento no hace nada.
     }
 }
