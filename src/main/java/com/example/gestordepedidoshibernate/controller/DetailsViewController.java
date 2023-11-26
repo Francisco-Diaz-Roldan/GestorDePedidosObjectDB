@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
  * Controlador para la vista de detalles de pedidos.
  */
 public class DetailsViewController implements Initializable {
+    // Definición de las columnas y la tabla en la interfaz gráfica de usuario.
+
     @javafx.fxml.FXML
     private TableColumn<Item, String> cIdItem;
     @javafx.fxml.FXML
@@ -34,7 +36,9 @@ public class DetailsViewController implements Initializable {
     @javafx.fxml.FXML
     private TableView<Item> tItem;
 
+    // Lista observable para contener los elementos (detalles de pedidos) que se mostrarán en la tabla.
     private ObservableList<Item> observableListItem;
+    // Instancia de ItemDAO para acceder a operaciones de base de datos relacionadas con Item.
     private ItemDAO itemDAO = new ItemDAO();
 
     /**
@@ -70,6 +74,7 @@ public class DetailsViewController implements Initializable {
         // Creo una lista observable para contener los elementos (detalles de pedidos) que se mostrarán en la tabla.
         observableListItem = FXCollections.observableArrayList();
 
+        // Carga de detalles de los pedidos previamente cargados en la sesión.
         Sesion.setPedido((new PedidoDAO()).get(Sesion.getPedido().getId_pedido()));
         System.out.println(Sesion.getPedido());
         System.out.println(Sesion.getItems());
@@ -78,6 +83,7 @@ public class DetailsViewController implements Initializable {
         // Establezco la lista observable como el conjunto de elementos que se mostrarán en la tabla.
         tItem.setItems(observableListItem);
 
+        // Actualiza la información del pedido.
         actualizarPedido();
     }
 
@@ -188,6 +194,7 @@ public class DetailsViewController implements Initializable {
     private void actualizarPedido() {
         Pedido pedidoActual = Sesion.getPedido();
         Double totalActual = calcularTotal(pedidoActual);
+        pedidoActual.setTotal(totalActual);
 
         try {
             PedidoDAO pedidoDAO = new PedidoDAO();
