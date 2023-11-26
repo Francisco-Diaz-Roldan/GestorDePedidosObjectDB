@@ -76,7 +76,7 @@ public class UserViewController implements Initializable {
         });
 
         cUsuario.setCellValueFactory((fila) -> {
-            String usuario = String.valueOf(fila.getValue().getUsuario());
+            String usuario = String.valueOf(fila.getValue().getUsuario().getNombre());
             return new SimpleStringProperty(usuario);
         });
 

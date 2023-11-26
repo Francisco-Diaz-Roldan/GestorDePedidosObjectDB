@@ -45,7 +45,7 @@ Label {
 /**
  * Estilo para el texto en elementos de menú.
  */
-#txtMenu > .label{
+#txtMenu > .label {
     -fx-text-fill: white; /* Color del texto en blanco */
 }
 
@@ -61,102 +61,110 @@ Label {
     -fx-font-weight: normal; /* Peso de fuente normal */
 }
 
-
 /**********************Tablas*********************/
 
-/* Estilo para las celdas de tabla cuando el cursor está sobre ellas*/
+/* Estilo para las celdas de tabla cuando el cursor está sobre ellas */
 .table-cell:hover {
     -fx-background-color: #2a5c7a;
     -fx-text-background-color: white;
 }
 
-/* Estilo para eliminar el borde de las celdas vacías en la tabla*/
-.table-row-cell:empty .table-cell{
+/* Estilo para eliminar el borde de las celdas vacías en la tabla */
+.table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
 
 /* Estilo para las celdas vacías en la tabla cuando el cursor está sobre ellas */
-.table-row-cell:empty .table-cell:empty:hover{
+.table-row-cell:empty .table-cell:empty:hover {
     -fx-background-color: white;
 }
 
-/* Estilo para centrar el contenido de las celdas*/
+/* Estilo para centrar el contenido de las celdas */
 .table-cell:filled {
     -fx-alignment: CENTER;
 }
 
-/*Estilo para filas cuando el ratón se encuentra sobre ellas*/
+/* Estilo para filas cuando el ratón se encuentra sobre ellas */
 .table-view:row-selection .table-row-cell:filled:hover {
     -fx-background-color: white;
-    -fx-text-background-color: #2a5c7a ;
+    -fx-text-background-color: #2a5c7a;
 }
 
-/*Estilo para filas seleccionadas cuando el ratón se encuentra sobre ellas*/
+/* Estilo para filas seleccionadas cuando el ratón se encuentra sobre ellas */
 .table-view:row-selection .table-row-cell:filled:selected:hover {
     -fx-background-color: #2a5c7a;
 }
 
-/*Estilo para filas seleccionadas por el usuario*/
+/* Estilo para filas seleccionadas por el usuario */
 .table-view:row-selection .table-row-cell:filled:selected {
     -fx-background-color: white;
 }
 
-/*Elimina el borde del table que aparece cuando el mismo tiene el foco*/
+/* Estilo para las celdas de tabla cuando están seleccionadas */
+.table-row-cell:filled:selected {
+    -fx-background-color: transparent; /* Color de fondo transparente cuando está seleccionada */
+    -fx-text-fill: white; /* Color de texto blanco cuando está seleccionada */
+}
+
+/* Evitar cambio de color de texto al hacer clic en las celdas de tabla */
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: inherit; /* Hereda el color de texto original */
+}
+/* Elimina el borde del table que aparece cuando el mismo tiene el foco */
 .table-view, .table-view:focused {
-    -fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+    -fx-background-color: transparent, -fx-box-border, -fx-control-inner-background;
     -fx-background-insets: -1.5, 0, 1;
     -fx-background-radius: 1.5, 0, 0;
 }
 
-/*Estilo para centrar y cambiar el color de los títulos de columnas*/
-.table-view .column-header .label{
-    -fx-text-fill: white;
-    -fx-alignment: center;
-}
-
-/*Estilo para cambiar el fondo del título de columna cuando el ratón está sobre él*/
+/* Estilo para cambiar el color de fondo del título de columna cuando el ratón está sobre él */
 .table-view .column-header:hover {
     -fx-background-color: #2f7eea;
+    -fx-text-fill: #2a5c7a; /* Cambio de color al pasar el ratón sobre el título */
 }
 
-/*Estilo para cambiar el tamaño, bordes y color de fondo de los títulos*/
+/* Estilo para cambiar el tamaño, bordes y color de fondo de los títulos */
 .table-view .column-header, .table-view .filler {
     -fx-background-color: #2a5c7a;
     -fx-size: 50;
     -fx-border-width: 0 1 5 0;
     -fx-border-insets: 0;
 }
+/* Estilo para filas seleccionadas por el usuario */
+.table-view:row-selection .table-row-cell:filled:selected {
+    -fx-background-color: transparent;
+}
 
-/*Estilo para hacer transparente el fondo de los títulos*/
+/* Estilo para las celdas de tabla cuando están seleccionadas */
+.table-row-cell:filled:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Cambia el color de texto a negro cuando está seleccionada */
+}
+
+/* Estilo para filas seleccionadas por el usuario */
+.table-view:row-selection .table-row-cell:filled:selected {
+    -fx-background-color: transparent;
+}
+
+/* Estilo para las celdas de tabla cuando están seleccionadas */
+.table-row-cell:filled:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Cambia el color de texto a negro cuando está seleccionada */
+}
+
+/* Estilo para las celdas de tabla cuando el cursor está sobre ellas y están seleccionadas */
+.table-row-cell:filled:selected:hover {
+    -fx-background-color: #2a5c7a;
+    -fx-text-fill: white;
+}
+
+
+/* Estilo para hacer transparente el fondo de los títulos */
 .table-view .column-header-background {
     -fx-background-color: transparent;
 }
 
-/* Desactivar cambio de color al hacer clic en celdas */
-.table-view .table-row-cell:filled:selected,
-.table-view .table-row-cell:filled:hover,
-.table-view .column-header:hover {
-    -fx-background-color: transparent;
-    -fx-text-background-color: -fx-text-inner-color;
-}
-
-/* Desactivar el cambio de color en el texto de las celdas al hacer clic */
-.table-view .table-cell:filled:selected {
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-inner-color;
-}
-/*Estilo para filas seleccionadas cuando el ratón se encuentra sobre ellas*/
-.table-view:row-selection .table-row-cell:filled:selected:hover {
-    -fx-background-color: white; /* Cambiado a blanco para evitar cambio de color */
-    -fx-text-background-color: #2a5c7a;
-}
-
-/*Estilo para filas seleccionadas por el usuario*/
-.table-view:row-selection .table-row-cell:filled:selected {
-    -fx-background-color: white; /* Cambiado a blanco para evitar cambio de color */
-}
-
-/*Estilo para cambiar el tipo de fuente*/
+/* Estilo para cambiar el tipo de fuente */
 * {
-    -fx-font-family: "Constantia"; /* Cambia el tipo de fuente a "Constantia"*/
+    -fx-font-family: "Constantia"; /* Cambia el tipo de fuente a "Constantia" */
 }
