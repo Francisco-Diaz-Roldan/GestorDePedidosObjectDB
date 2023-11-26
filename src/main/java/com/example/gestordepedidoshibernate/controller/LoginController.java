@@ -24,6 +24,10 @@ public class LoginController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private PasswordField txtPassword;
+    @FXML
+    private Button btnAcceder;
+    @FXML
+    private Label labelInfo;
 
     /**
      * Método para manejar el evento de inicio de sesión.

@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +37,10 @@ public class DetailsViewController implements Initializable {
     private ObservableList<Item> observableListItem;
     // Instancia de ItemDAO para acceder a operaciones de base de datos relacionadas con Item.
     private ItemDAO itemDAO = new ItemDAO();
+    @javafx.fxml.FXML
+    private Button btnAdd;
+    @javafx.fxml.FXML
+    private Button btnDelete;
 
     /**
      * Inicializa la vista de detalles de pedidos.
@@ -92,7 +93,7 @@ public class DetailsViewController implements Initializable {
      *
      * @param actionEvent Evento de acción que desencadena la salida.
      */
-    @javafx.fxml.FXML
+    @Deprecated
     public void salir(ActionEvent actionEvent) {
         Sesion.setUsuario(null);
         HelloApplication.loadFXMLLogin("login.fxml");
@@ -104,7 +105,7 @@ public class DetailsViewController implements Initializable {
      * @param actionEvent Evento de acción que desencadena el retorno.
      * @throws IOException Excepción de entrada/salida.
      */
-    @javafx.fxml.FXML
+    @Deprecated
     public void volverAtras(ActionEvent actionEvent) throws IOException {
         HelloApplication.loadFXMLUser("user-view.fxml");
     }
@@ -114,7 +115,7 @@ public class DetailsViewController implements Initializable {
      *
      * @param actionEvent Evento de acción que desencadena la visualización de la información.
      */
-    @javafx.fxml.FXML
+    @Deprecated
     public void mostrarAcercaDe(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Acerca de ");

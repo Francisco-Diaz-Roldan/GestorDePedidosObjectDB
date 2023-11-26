@@ -48,6 +48,10 @@ public class UserViewController implements Initializable {
 
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
     private final PedidoDAO pedidoDAO = new PedidoDAO(); //Creo una instancia de PedidoDAO.
+    @javafx.fxml.FXML
+    private Button btnAdd;
+    @javafx.fxml.FXML
+    private Button btnDelete;
 
     /**
      * Inicializa la vista principal del usuario.

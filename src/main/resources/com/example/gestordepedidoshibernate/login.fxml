@@ -48,10 +48,17 @@
                   <PasswordField id="txtPassword" fx:id="txtPassword" />
                </children>
             </FlowPane>
-            <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" text="Acceder">
+            <Button id="btnAcceder" fx:id="btnAcceder" mnemonicParsing="false" onAction="#login" prefHeight="50.0" text="Acceder">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0">
+                     <image>
+                        <Image url="@../../../imagenes/login.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <Label id="labelInfo" fx:id="labelInfo" />
          </children>

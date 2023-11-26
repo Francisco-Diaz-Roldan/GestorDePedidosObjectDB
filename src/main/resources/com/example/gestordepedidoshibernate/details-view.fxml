@@ -9,6 +9,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -43,7 +45,7 @@
          <center>
             <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="tItem" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tItem" prefHeight="155.0" prefWidth="450.0">
                     <columns>
                       <TableColumn fx:id="cIdItem" prefWidth="75.0" text="ID" />
                       <TableColumn fx:id="cCodigoPedido" prefWidth="111.20001983642578" text="Código" />
@@ -54,32 +56,43 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <FlowPane alignment="TOP_CENTER" hgap="50.0">
-                     <children>
-                        <Button id="otrosBtn" fx:id="btnAdd" mnemonicParsing="false" onAction="#addItem" prefWidth="80.0" text="Añadir">
-                           <FlowPane.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </FlowPane.margin>
-                           <padding>
-                              <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                           </padding>
-                        </Button>
-                        <Button id="otrosBtn" fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteItem" prefWidth="80.0" text="Eliminar">
-                           <FlowPane.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </FlowPane.margin>
-                           <padding>
-                              <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </FlowPane>
                </children>
             </VBox>
          </center>
       </BorderPane>
+      <FlowPane alignment="TOP_CENTER" hgap="50.0">
+         <children>
+            <Button id="otrosBtn" fx:id="btnAdd" mnemonicParsing="false" onAction="#addItem" prefHeight="50.0" text="Añadir">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </FlowPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+               </padding>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0">
+                     <image>
+                        <Image url="@../../../imagenes/agregar-carrito.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button id="otrosBtn" fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteItem" prefHeight="50.0" text="Eliminar">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </FlowPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+               </padding>
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0">
+                     <image>
+                        <Image url="@../../../imagenes/papelera.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </FlowPane>
    </children>
 </VBox>

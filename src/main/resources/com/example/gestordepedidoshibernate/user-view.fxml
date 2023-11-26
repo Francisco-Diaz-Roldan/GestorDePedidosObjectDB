@@ -81,18 +81,32 @@
                   </TableView>
                   <FlowPane alignment="TOP_CENTER" hgap="50.0">
                      <children>
-                        <Button id="otrosBtn" fx:id="btnAdd" mnemonicParsing="false" onAction="#addPedido" prefHeight="25.0" prefWidth="80.0" text="Añadir">
+                        <Button id="otrosBtn" fx:id="btnAdd" mnemonicParsing="false" onAction="#addPedido" prefHeight="50.0" text="Añadir">
                            <FlowPane.margin>
                               <Insets bottom="5.0" top="5.0" />
                            </FlowPane.margin>
                            <padding>
                               <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                            </padding>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../../../imagenes/agregar-carrito.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
-                        <Button id="otrosBtn" fx:id="btnDelete" mnemonicParsing="false" onAction="#deletePedido" prefHeight="25.0" prefWidth="80.0" text="Eliminar">
+                        <Button id="otrosBtn" fx:id="btnDelete" mnemonicParsing="false" onAction="#deletePedido" prefHeight="50.0" text="Eliminar">
                            <padding>
                               <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                            </padding>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../../../imagenes/papelera.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                      <VBox.margin>
