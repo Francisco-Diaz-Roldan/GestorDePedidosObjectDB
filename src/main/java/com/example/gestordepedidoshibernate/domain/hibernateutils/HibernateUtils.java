@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 @Log
 public class HibernateUtils {
-    private static SessionFactory sf = null;
+    private static SessionFactory sf;
 
     static {
         try {
@@ -15,7 +15,7 @@ public class HibernateUtils {
             sf = cfg.buildSessionFactory();
             log.info("¡SessionFactory creada con exito!");
         } catch(Exception e){
-            log.severe("Error al crear SessionFactory :(");
+            e.printStackTrace();
         }
     }
 

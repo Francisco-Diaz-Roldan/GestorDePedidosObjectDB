@@ -31,7 +31,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
         stage.setTitle("Gestor de pedidos");
-        stage.getIcons().add(new Image("C:\\Users\\pacod\\IdeaProjects\\GestorDePedidosHibernate\\src\\main\\resources\\imagenes\\logo_gestor_pedidos-removebg-preview.png",100,100, true, true));
+        //stage.getIcons().add(new Image("C:\\Users\\pacod\\IdeaProjects\\GestorDePedidosHibernate\\src\\main\\resources\\imagenes\\logo_gestor_pedidos-removebg-preview.png",100,100, true, true));
         stage.setScene(scene);
         stage.show();
     }
