@@ -14,7 +14,7 @@
 
 <BorderPane id="fondo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestordepedidoshibernate.controller.LoginController">
    <center>
-      <VBox alignment="CENTER" spacing="15.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <FlowPane alignment="TOP_CENTER" hgap="10.0">
                <children>

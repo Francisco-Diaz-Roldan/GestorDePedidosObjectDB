@@ -48,6 +48,10 @@ public class UserViewController implements Initializable {
 
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
     private final PedidoDAO pedidoDAO = new PedidoDAO(); //Creo una instancia de PedidoDAO.
+    @javafx.fxml.FXML
+    private Button btnAdd;
+    @javafx.fxml.FXML
+    private Button btnDelete;
 
 
     /**
@@ -231,6 +235,8 @@ public class UserViewController implements Initializable {
             // Aumenta en 1 el último número del código de los pedidos.
             int ultimoNumero = Integer.parseInt(ultimoCodigoPedido.substring(4));
             int nuevoNumero = ultimoNumero + 1;
+
+            // Genero un nuevo código de pedido concatenando "PED-" con un número formateado a tres dígitos
             String nuevoCodigoPedido = "PED-" + String.format("%03d", nuevoNumero);
 
             // Establece el nuevo código en el pedido.

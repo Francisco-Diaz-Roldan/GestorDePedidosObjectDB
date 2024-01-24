@@ -34,7 +34,6 @@ public class ItemDAO implements DAO<Item> {
             // Ejecuta la consulta y asigna los resultados a la lista de salida.
             salida = (ArrayList<Item>) q.getResultList();
         }
-
         // Retorna la lista de resultados.
         return salida;
     }

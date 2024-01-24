@@ -15,6 +15,8 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 /**
  * Controlador para la vista de detalles de pedidos.
@@ -253,4 +255,7 @@ public class DetailsViewController implements Initializable {
         }
     }
 
+    //TODO Metodo Jaspersoft Reports
+
+    //TODO SWING
 }

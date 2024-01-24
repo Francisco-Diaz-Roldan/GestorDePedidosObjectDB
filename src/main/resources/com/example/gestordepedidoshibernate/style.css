@@ -3,6 +3,10 @@
     -fx-background-color: linear-gradient(to bottom right, #2D6281FF, white); /* Gradiente lineal de azul a blanco */
 }
 
+Button{
+    -fx-effect: dropshadow(three-pass-box, rgb(19, 39, 87), 10, 0, 2, 2);
+}
+
 /* Estilo para el botón "Acceder" */
 #btnAcceder {
     -fx-background-color: white; /* Color de fondo del botón en blanco */

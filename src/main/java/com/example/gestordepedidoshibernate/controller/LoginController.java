@@ -25,6 +25,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private PasswordField txtPassword;  // Campo de texto para ingresar la contraseña (oculta por puntos o asteriscos).
+    @FXML
+    private Button btnAcceder;
+    @FXML
+    private Label labelInfo;
 
 
     /**
