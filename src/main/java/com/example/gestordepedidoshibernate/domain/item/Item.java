@@ -10,8 +10,8 @@ import java.io.Serializable;
 /**
  * Clase de entidad que representa un item en el sistema, con anotaciones JPA para mapear la entidad a la base de datos.
  *
- * <p>Esta clase utiliza la anotación {@code @Data} de Lombok para generar automáticamente métodos como {@code toString()},
- * {@code hashCode()}, y {@code equals()}.</p>
+ * <p>Esta clase utiliza la anotación {@code @Data} de Lombok para generar automáticamente métodos como
+ * {@code toString()},{@code hashCode()}, y {@code equals()}.</p>
  *
  * <p>Las anotaciones {@code @Entity} y {@code @Table} se utilizan para indicar que esta clase es una entidad JPA y
  * para especificar el nombre de la tabla en la base de datos, respectivamente.</p>

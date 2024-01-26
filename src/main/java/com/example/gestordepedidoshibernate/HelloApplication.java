@@ -73,7 +73,9 @@ public class HelloApplication extends Application {
         // Configura el título de la ventana.
         stage.setTitle("Gestor de pedidos");
         // Agrega un ícono a la ventana.
-        stage.getIcons().add(new Image(getClass().getResource("/imagenes/logo_gestor_pedidos-removebg-preview.png").toString(), 100, 100, true, true));
+        stage.getIcons().add(new Image(getClass()
+                .getResource("/imagenes/logo_gestor_pedidos-removebg-preview.png").toString(),
+                100, 100, true, true));
         // Establece la escena en el escenario y muestra la ventana.
         stage.setScene(scene);
         stage.show();

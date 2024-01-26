@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 public class ObjectDBUtils {
     @Getter
     private final static EntityManagerFactory entityManagerFactory;
+
     static {
         entityManagerFactory = Persistence.createEntityManagerFactory("data.odb");
     }

@@ -81,7 +81,7 @@ public class PedidoDAO implements DAO<Pedido> {
             entityManager.getTransaction().begin();
             entityManager.persist(data);
             entityManager.getTransaction().commit();
-            }finally{
+        } finally {
             entityManager.close();
         }
         // Devuelve el objeto Pedido.
@@ -142,7 +142,7 @@ public class PedidoDAO implements DAO<Pedido> {
     @Override
     public void saveAll(List<Pedido> data) {
         EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
             for (Pedido p : data) {
                 entityManager.persist(p);

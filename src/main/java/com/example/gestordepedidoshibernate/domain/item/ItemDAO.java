@@ -2,6 +2,7 @@ package com.example.gestordepedidoshibernate.domain.item;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
 import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class ItemDAO implements DAO<Item> {
     public ArrayList<Item> getAll() {
         var salida = new ArrayList<Item>(0);
         EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
-        try{
+        try {
             TypedQuery<Item> query = entityManager.createQuery("select i from Item i", Item.class);
             salida = (ArrayList<Item>) query.getResultList();
         } finally {

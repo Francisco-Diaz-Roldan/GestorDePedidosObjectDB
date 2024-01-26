@@ -50,7 +50,8 @@ public class UsuarioDAO implements DAO<Usuario> {
         EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         // Crea una sesión de Hibernate.
         try {
-            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u where  u.id_usuario= :id", Usuario.class);
+            TypedQuery<Usuario> query = entityManager
+                    .createQuery("select u from Usuario u where  u.id_usuario= :id", Usuario.class);
             query.setParameter("id", id);
             // Utiliza el método `get` de Hibernate para obtener el objeto Usuario por su identificador.
             var resultado = query.getResultList();
@@ -135,7 +136,8 @@ public class UsuarioDAO implements DAO<Usuario> {
 
         // Abre una sesión de Hibernate.
         try {
-            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u where u.email= :e and u.pass= :p", Usuario.class);
+            TypedQuery<Usuario> query = entityManager
+                    .createQuery("select u from Usuario u where u.email= :e and u.pass= :p", Usuario.class);
             query.setParameter("e", email);
             query.setParameter("p", pass);
             result = query.getSingleResult();

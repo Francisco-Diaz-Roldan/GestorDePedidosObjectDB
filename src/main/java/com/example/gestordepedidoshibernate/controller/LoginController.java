@@ -61,7 +61,8 @@ public class LoginController implements Initializable {
             HelloApplication.loadFXMLUser("user-view.fxml");
 
         } catch (ErrorAccesoException e) {
-            // Si ocurre un error debido a un usuario inexistente o una contraseña incorrecta, muestra un mensaje de advertencia.
+            // Si ocurre un error debido a un usuario inexistente o una contraseña incorrecta, muestra un mensaje de
+            // advertencia.
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText("¡Algo ha fallado!");

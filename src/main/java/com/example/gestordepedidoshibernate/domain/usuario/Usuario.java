@@ -18,23 +18,31 @@ import java.util.List;
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
-    /** Id único del usuario. */
+    /**
+     * Id único del usuario.
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_usuario;
 
-    /** Nombre del usuario. */
+    /**
+     * Nombre del usuario.
+     */
 
-    @Column(name="nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    /** Contraseña del usuario. */
+    /**
+     * Contraseña del usuario.
+     */
 
     @Column(name = "pass")
     private String pass;
 
-    /** Correo electrónico del usuario. */
+    /**
+     * Correo electrónico del usuario.
+     */
 
     @Column(name = "email")
     private String email;
@@ -54,7 +62,9 @@ public class Usuario implements Serializable {
         this.pedidos = pedidos;
     }
 
-    /** Lista de pedidos asociados al usuario. */
+    /**
+     * Lista de pedidos asociados al usuario.
+     */
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Pedido> pedidos = new ArrayList<>(0);

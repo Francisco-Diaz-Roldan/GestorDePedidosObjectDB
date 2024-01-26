@@ -30,7 +30,8 @@ public class ItemViewController implements Initializable {
     @javafx.fxml.FXML
     private ComboBox<Producto> comboProducto;  // ComboBox para seleccionar un producto de una lista.
 
-    private ObservableList<Producto> observableListProductos;  // Lista observable para contener objetos de la clase Producto.
+    private ObservableList<Producto> observableListProductos;  // Lista observable para contener objetos de la clase
+    // Producto.
 
 
     /**
@@ -60,7 +61,8 @@ public class ItemViewController implements Initializable {
         spCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1, 1));
 
         // Configuración inicial del texto de la etiqueta que muestra la cantidad disponible del producto seleccionado.
-        labelInfoCantidad.setText("Cantidad disponible: " + comboProducto.getSelectionModel().getSelectedItem().getCantidad_disponible());
+        labelInfoCantidad.setText("Cantidad disponible: " + comboProducto.getSelectionModel().getSelectedItem()
+                .getCantidad_disponible());
 
         // Agrega un listener para actualizar la etiqueta cuando se selecciona un nuevo producto en el ComboBox.
         comboProducto.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -119,7 +121,8 @@ public class ItemViewController implements Initializable {
         // Establece el usuario en la sesión como null, indicando que no hay usuario activo.
         Sesion.setUsuario(null);
 
-        // Carga el FXML de la pantalla de inicio de sesión utilizando el método loadFXMLLogin de la clase HelloApplication.
+        // Carga el FXML de la pantalla de inicio de sesión utilizando el método loadFXMLLogin de la clase
+        // HelloApplication.
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
@@ -131,7 +134,8 @@ public class ItemViewController implements Initializable {
      * @throws IOException Excepción de entrada/salida.
      */
     public void volverAtras(ActionEvent actionEvent) throws IOException {
-        // Carga el FXML de la vista de detalles del usuario utilizando el método loadFXMLUser de la clase HelloApplication.
+        // Carga el FXML de la vista de detalles del usuario utilizando el método loadFXMLUser de la clase
+        // HelloApplication.
         HelloApplication.loadFXMLUser("details-view.fxml");
     }
 

@@ -160,7 +160,7 @@ public class UserViewController implements Initializable {
 
     private Double calcularTotalPedidos(Pedido pedido) {
         // Inicializa el total en 0.0.
-        Double total  = 0.0;
+        Double total = 0.0;
 
         // Itera sobre cada elemento (Item) en el pedido.
         for (Item items : pedido.getItems()) {
@@ -182,7 +182,8 @@ public class UserViewController implements Initializable {
         // Establece el usuario en la sesión como null, indicando que no hay usuario activo.
         Sesion.setUsuario(null);
 
-        // Carga el FXML de la pantalla de inicio de sesión utilizando el método loadFXMLLogin de la clase HelloApplication.
+        // Carga el FXML de la pantalla de inicio de sesión utilizando el método loadFXMLLogin de la clase
+        // HelloApplication.
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
@@ -251,9 +252,10 @@ public class UserViewController implements Initializable {
     private void setId(Pedido pedido) {
         EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         try {
-            TypedQuery<Integer> query = entityManager.createQuery("select MAX(p.id_pedido) FROM Pedido p", Integer.class);
+            TypedQuery<Integer> query = entityManager
+                    .createQuery("select MAX(p.id_pedido) FROM Pedido p", Integer.class);
             Integer ultimoId = query.getSingleResult();
-            if (ultimoId != null){
+            if (ultimoId != null) {
                 //Incrementa y establece el último id.
                 pedido.setId_pedido(ultimoId + 1);
             } else { //Si no hay pedidos en la Base de Datos, el id será por defecto '1'.
@@ -272,7 +274,8 @@ public class UserViewController implements Initializable {
     private void setCodigoPedido(Pedido pedido) {
         EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         try {
-            TypedQuery<String> query = entityManager.createQuery("select MAX(p.codigo_pedido) FROM Pedido p", String.class);
+            TypedQuery<String> query = entityManager
+                    .createQuery("select MAX(p.codigo_pedido) FROM Pedido p", String.class);
             String ultimoCodigoPedido = query.getSingleResult();
             if (ultimoCodigoPedido != null) {
                 //Incrementa el último código de pedido.
@@ -281,7 +284,7 @@ public class UserViewController implements Initializable {
                 String nuevoCodigoPedido = "PED-" + String.format("%03d", nuevoNumero);
                 //Establece el nuevo código de pedido.
                 pedido.setCodigo_pedido(nuevoCodigoPedido);
-            }else { //Si no hay pedidos en la Base de Datos, el código de pedido será por defecto 'PED-001'.
+            } else { //Si no hay pedidos en la Base de Datos, el código de pedido será por defecto 'PED-001'.
                 pedido.setCodigo_pedido("PED-001");
             }
         } catch (Exception e) {
@@ -315,7 +318,8 @@ public class UserViewController implements Initializable {
         if (pedidoSeleccionado != null) {
             // Crea un cuadro de diálogo de confirmación.
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("¿De verdad que quieres borrar el pedido: " + pedidoSeleccionado.getCodigo_pedido() + "?");
+            alert.setContentText("¿De verdad que quieres borrar el pedido: "
+                    + pedidoSeleccionado.getCodigo_pedido() + "?");
 
             // Muestra el cuadro de diálogo y espera la respuesta del usuario.
             var result = alert.showAndWait().get();

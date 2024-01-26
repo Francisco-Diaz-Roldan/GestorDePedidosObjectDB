@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 /**
  * Clase que representa la entidad Producto en la base de datos. Utiliza la anotación JPA `@Entity` para indicar que
- * está asociada con una tabla en la base de datos, y utiliza la anotación `@Table` para especificar el nombre de la tabla.
+ * está asociada con una tabla en la base de datos, y utiliza la anotación `@Table` para especificar el nombre de la
+ * tabla.
  */
 
 @Data
@@ -31,8 +32,8 @@ public class Producto implements Serializable {
     /**
      * Constructor para crear un objeto Producto con la información proporcionada.
      *
-     * @param nombre             El nombre del producto.
-     * @param precio             El precio del producto.
+     * @param nombre              El nombre del producto.
+     * @param precio              El precio del producto.
      * @param cantidad_disponible La cantidad disponible del producto.
      */
     public Producto(String nombre, Double precio, Integer cantidad_disponible) {
@@ -49,6 +50,6 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return nombre ;
+        return nombre;
     }
 }

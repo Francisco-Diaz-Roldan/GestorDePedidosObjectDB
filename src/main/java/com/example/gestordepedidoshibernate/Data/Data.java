@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Data {
-    public static List<Producto> generarProductos(){
+    public static List<Producto> generarProductos() {
         List<Producto> listaProductos = new ArrayList<>();
         listaProductos.add(new Producto("Smartphone", 299.00, 50));
         listaProductos.add(new Producto("Portátil", 799.00, 30));
@@ -17,12 +17,12 @@ public class Data {
         return listaProductos;
     }
 
-    public static List<Usuario> generarUsuarios(){
+    public static List<Usuario> generarUsuarios() {
         List<Usuario> listaUsuarios = new ArrayList<>();
-        listaUsuarios.add(new Usuario("usuario1","1234","usuario1@gmail.com",new ArrayList<>()));
-        listaUsuarios.add(new Usuario("usuario2","1234","usuario2@gmail.com",new ArrayList<>()));
-        listaUsuarios.add(new Usuario("usuario3","1234","usuario3@gmail.com",new ArrayList<>()));
-        listaUsuarios.add(new Usuario("usuario4","1234","usuario4@gmail.com",new ArrayList<>()));
+        listaUsuarios.add(new Usuario("usuario1", "1234", "usuario1@gmail.com", new ArrayList<>()));
+        listaUsuarios.add(new Usuario("usuario2", "1234", "usuario2@gmail.com", new ArrayList<>()));
+        listaUsuarios.add(new Usuario("usuario3", "1234", "usuario3@gmail.com", new ArrayList<>()));
+        listaUsuarios.add(new Usuario("usuario4", "1234", "usuario4@gmail.com", new ArrayList<>()));
         return listaUsuarios;
     }
 }

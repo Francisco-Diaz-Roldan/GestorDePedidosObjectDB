@@ -71,7 +71,6 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public Producto update(Producto data) {
-        // En este método, se puede implementar la lógica para actualizar la información de un producto en la base de datos.
         return null;
     }
 
@@ -81,9 +80,7 @@ public class ProductoDAO implements DAO<Producto> {
      * @param data Producto a eliminar.
      */
     @Override
-    public void delete(Producto data) {
-        // En este método, puedes implementar la lógica para eliminar un producto de la base de datos. Aunque por el momento no hace nada.
-    }
+    public void delete(Producto data) {}
 
     /**
      * Guarda una lista de objetos de tipo Producto en la base de datos.
