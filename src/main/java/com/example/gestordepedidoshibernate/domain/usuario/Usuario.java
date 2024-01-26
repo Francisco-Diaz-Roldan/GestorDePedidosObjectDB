@@ -1,9 +1,9 @@
 package com.example.gestordepedidoshibernate.domain.usuario;
 
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

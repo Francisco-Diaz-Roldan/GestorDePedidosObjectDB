@@ -2,9 +2,9 @@ package com.example.gestordepedidoshibernate.domain.pedido;
 
 import com.example.gestordepedidoshibernate.domain.item.Item;
 import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.example.gestordepedidoshibernate.domain.producto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
