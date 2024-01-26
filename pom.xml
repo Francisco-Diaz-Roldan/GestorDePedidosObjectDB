@@ -14,7 +14,28 @@
         <junit.version>5.9.2</junit.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>objectdb</id> <!-- Para ObjectDB le añado este repositorio de objectDB -->
+            <name>ObjectDB Repository</name>
+            <url>https://m2.objectdb.com</url>
+        </repository>
+    </repositories>
+
+
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId><!-- Para ObjectDB le añado esta dependencia de persistence-->
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.objectdb</groupId>  <!-- Para ObjectDB le añado esta dependencia de objectDB -->
+            <artifactId>objectdb</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -61,7 +82,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.1.0</version>
+            <version>8.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
