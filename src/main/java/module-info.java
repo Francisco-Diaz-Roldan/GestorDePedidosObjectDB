@@ -4,11 +4,10 @@ module com.example.gestordepedidos {
 
     requires java.sql;
     requires lombok;
-    requires jakarta.persistence;
-    requires org.hibernate.orm.core;
     requires java.naming;
     requires javafx.swing; // Para swing
     requires jasperreports;// Para jaspersoft
+    requires javax.persistence; // Para objectDB (sustituye a jakarta y elimina tambien hibernate por incompatibilidad)
 
 
     opens com.example.gestordepedidoshibernate.domain.item;
@@ -21,5 +20,4 @@ module com.example.gestordepedidos {
 
     exports com.example.gestordepedidoshibernate;
     exports com.example.gestordepedidoshibernate.controller;
-
 }
