@@ -14,6 +14,7 @@ import java.io.IOException;
  * Esta clase se encarga de la gestión de ventanas y escenas en la aplicación JavaFX.
  */
 public class HelloApplication extends Application {
+    //hola
     private static Stage miStage;
 
     /**
