@@ -2,11 +2,13 @@ package com.example.gestordepedidoshibernate.domain.producto;
 
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
-import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementación del patrón de acceso a datos (DAO) para la entidad Producto.
  * Proporciona métodos para realizar operaciones CRUD (Create, Read, Update, Delete) en la base de datos.
@@ -20,18 +22,18 @@ public class ProductoDAO implements DAO<Producto> {
      */
     @Override
     public ArrayList<Producto> getAll() {
-        // Crea una lista para almacenar los resultados.
         var salida = new ArrayList<Producto>(0);
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        // Abro una sesión de Hibernate.
+        try {
+            TypedQuery<Producto> query = entityManager.createQuery("select p from Producto p", Producto.class);
 
-        // Abre una sesión de Hibernate.
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
-            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los objetos Producto.
-            Query<Producto> q = s.createQuery("from Producto", Producto.class);
-
-            // Ejecuta la consulta y asigna los resultados a la lista de salida.
-            salida = (ArrayList<Producto>) q.getResultList();
+            // Obtengo la lista de resultados.
+            salida = (ArrayList<Producto>) query.getResultList();
+        } finally {
+            entityManager.close();
         }
-        // Devuelve la lista de resultados.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
 
@@ -68,8 +70,9 @@ public class ProductoDAO implements DAO<Producto> {
      * @param data Producto con la información actualizada.
      */
     @Override
-    public void update(Producto data) {
+    public Producto update(Producto data) {
         // En este método, se puede implementar la lógica para actualizar la información de un producto en la base de datos.
+        return null;
     }
 
     /**
@@ -80,5 +83,24 @@ public class ProductoDAO implements DAO<Producto> {
     @Override
     public void delete(Producto data) {
         // En este método, puedes implementar la lógica para eliminar un producto de la base de datos. Aunque por el momento no hace nada.
+    }
+
+    /**
+     * Guarda una lista de objetos de tipo Producto en la base de datos.
+     *
+     * @param data La lista de objetos de tipo Producto que se va a guardar.
+     */
+    @Override
+    public void saveAll(List<Producto> data) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            for (Producto pr : data) {
+                entityManager.persist(pr);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
     }
 }

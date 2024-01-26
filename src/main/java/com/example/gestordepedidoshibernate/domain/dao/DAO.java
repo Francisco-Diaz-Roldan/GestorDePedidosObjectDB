@@ -1,6 +1,7 @@
 package com.example.gestordepedidoshibernate.domain.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interfaz genérica para operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos.
@@ -36,7 +37,7 @@ public interface DAO<T> {
      *
      * @param data El objeto a ser actualizado.
      */
-    public void update(T data);
+    public T update(T data);
 
     /**
      * Elimina un registro existente de la base de datos.
@@ -44,4 +45,11 @@ public interface DAO<T> {
      * @param data El objeto a ser eliminado.
      */
     public void delete(T data);
+
+    /**
+     * Guarda todos los registros existentes de la base de datos.
+     *
+     * @param data El objeto a ser guardado.
+     */
+    public void saveAll(List<T> data);
 }

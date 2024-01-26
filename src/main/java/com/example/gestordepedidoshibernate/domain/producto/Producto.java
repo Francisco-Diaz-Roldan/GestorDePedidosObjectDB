@@ -28,6 +28,13 @@ public class Producto implements Serializable {
     @Column(name = "cantidad_disponible")
     private Integer cantidad_disponible;  // Cantidad disponible del producto.
 
+    /**
+     * Constructor para crear un objeto Producto con la información proporcionada.
+     *
+     * @param nombre             El nombre del producto.
+     * @param precio             El precio del producto.
+     * @param cantidad_disponible La cantidad disponible del producto.
+     */
     public Producto(String nombre, Double precio, Integer cantidad_disponible) {
         this.nombre = nombre;
         this.precio = precio;

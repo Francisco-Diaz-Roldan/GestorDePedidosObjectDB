@@ -2,12 +2,12 @@ package com.example.gestordepedidoshibernate.domain.usuario;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
 import com.example.gestordepedidoshibernate.domain.excepciones.ErrorAccesoException;
-import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import jakarta.persistence.NoResultException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que implementa operaciones de acceso a datos (DAO) para la entidad Usuario.
@@ -16,49 +16,57 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     /**
      * Obtiene todos los usuarios almacenados en la base de datos.
+     *
      * @return Lista de usuarios.
      */
     @Override
     public ArrayList<Usuario> getAll() {
         var salida = new ArrayList<Usuario>(0);
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
 
-        // Abre una sesión de Hibernate.
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los registros de Usuario.
-            Query<Usuario> q = session.createQuery("from Usuario", Usuario.class);
+        // Abro una sesión de Hibernate.
+        try {
+            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u", Usuario.class);
 
-            // Obtiene la lista de resultados.
-            salida = (ArrayList<Usuario>) q.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Obtengo la lista de resultados.
+            salida = (ArrayList<Usuario>) query.getResultList();
+        } finally {
+            entityManager.close();
         }
 
-        // Retorna la lista de Usuarios obtenida de la base de datos.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
 
     /**
      * Obtiene un usuario por su identificador único.
+     *
      * @param id Identificador único del usuario.
      * @return Usuario encontrado o un objeto Usuario vacío si no se encuentra.
      */
     @Override
     public Usuario get(Integer id) {
-        var salida = new Usuario();
+        Usuario salida = null;
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         // Crea una sesión de Hibernate.
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+        try {
+            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u where  u.id_usuario= :id", Usuario.class);
+            query.setParameter("id", id);
             // Utiliza el método `get` de Hibernate para obtener el objeto Usuario por su identificador.
-            salida = session.get(Usuario.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
+            var resultado = query.getResultList();
+            if (!resultado.isEmpty()) {
+                salida = resultado.get(0);
+            }
+        } finally {
+            entityManager.close();
         }
-
-        // Devuelve el objeto Usuario obtenido por su identificador.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
 
     /**
      * Guarda un nuevo usuario en la base de datos.
+     *
      * @param data Usuario a guardar.
      * @return Usuario guardado.
      */
@@ -69,14 +77,18 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     /**
      * Actualiza la información de un usuario en la base de datos.
+     *
      * @param data Usuario con la información actualizada.
+     * @return
      */
     @Override
-    public void update(Usuario data) {// Implementa la lógica de actualización si es necesario.
-         }
+    public Usuario update(Usuario data) {// Implementa la lógica de actualización si es necesario.
+        return null;
+    }
 
     /**
      * Elimina un usuario de la base de datos.
+     *
      * @param data Usuario a eliminar.
      */
     @Override
@@ -85,55 +97,53 @@ public class UsuarioDAO implements DAO<Usuario> {
     }
 
     /**
+     * Guarda una lista de objetos de tipo Usuario en la base de datos.
+     *
+     * @param data La lista de objetos de tipo Usuario que se va a guardar.
+     */
+    @Override
+    public void saveAll(List<Usuario> data) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            for (Usuario u : data) {
+                entityManager.persist(u);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    /**
      * Valida las credenciales de un usuario.
+     *
      * @param email Correo electrónico del usuario.
-     * @param pass Contraseña del usuario.
+     * @param pass  Contraseña del usuario.
      * @return Usuario validado.
      * @throws ErrorAccesoException Excepción lanzada en caso de error de acceso.
      */
     public Usuario validateUser(String email, String pass) throws ErrorAccesoException {
         Usuario result = null;
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+
 
         // Verifica si la SessionFactory está inicializada.
-        if (HibernateUtils.getSessionFactory() == null) {
+        if (entityManager == null) {
             throw new ErrorAccesoException("Error en la inicialización de la SessionFactory");
         }
 
         // Abre una sesión de Hibernate.
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            // Crea una consulta HQL (Hibernate Query Language) para obtener un usuario por email y contraseña.
-            Query<Usuario> q = session.createQuery("from Usuario where email=:e and pass=:p", Usuario.class);
-            q.setParameter("e", email);
-            q.setParameter("p", pass);
-
-            // Intenta obtener un resultado único.
-            try {
-                result = q.getSingleResult();
-            } catch (NoResultException ex) {
-                // En caso de que no se encuentre ningún usuario con la combinación de email y contraseña.
-                throw new ErrorAccesoException("Usuario no encontrado");
-            }
+        try {
+            TypedQuery<Usuario> query = entityManager.createQuery("select u from Usuario u where u.email= :e and u.pass= :p", Usuario.class);
+            query.setParameter("e", email);
+            query.setParameter("p", pass);
+            result = query.getSingleResult();
+        } finally {
+            entityManager.close();
         }
-
         // Devuelve el resultado (puede ser null si no se encuentra un usuario).
         return result;
     }
-
 }
-    /*public Usuario validateUser(String email, String pass) {
-        Usuario result = null;
-
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            Query<Usuario> q = session.createQuery("from Usuario where email=:e and pass=:p", Usuario.class);
-            q.setParameter("e", email);
-            q.setParameter("p", pass);
-
-            try {
-                result = q.getSingleResult();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-        return result;
-    }*/
 

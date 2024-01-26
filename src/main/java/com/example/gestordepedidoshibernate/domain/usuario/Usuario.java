@@ -39,6 +39,14 @@ public class Usuario implements Serializable {
     @Column(name = "email")
     private String email;
 
+    /**
+     * Constructor para crear un objeto Usuario con la información proporcionada.
+     *
+     * @param nombre  El nombre del usuario.
+     * @param pass    La contraseña del usuario.
+     * @param email   El correo electrónico del usuario.
+     * @param pedidos La lista de pedidos asociada al usuario.
+     */
     public Usuario(String nombre, String pass, String email, List<Pedido> pedidos) {
         this.nombre = nombre;
         this.pass = pass;

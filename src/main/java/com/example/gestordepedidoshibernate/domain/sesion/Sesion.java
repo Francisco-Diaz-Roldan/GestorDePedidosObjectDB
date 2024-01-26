@@ -16,42 +16,58 @@ import java.util.ArrayList;
  */
 public class Sesion {
 
-    /** Posición del ítem en la sesión. */
+    /**
+     * Posición del ítem en la sesión.
+     */
     @Getter
     @Setter
     private static Integer posicion = null;
 
-    /** Usuario actual en la sesión. */
+    /**
+     * Usuario actual en la sesión.
+     */
     @Getter
     @Setter
     private static Usuario usuario;
 
-    /** Pedido actual en la sesión. */
+    /**
+     * Pedido actual en la sesión.
+     */
     @Getter
     @Setter
     private static Pedido pedido;
 
-    /** Ítem actual en la sesión. */
+    /**
+     * Ítem actual en la sesión.
+     */
     @Getter
     @Setter
     private static Item item;
 
-    /** Producto actual en la sesión. */
+    /**
+     * Producto actual en la sesión.
+     */
     @Getter
     @Setter
     private static Producto producto;
 
-    /** Lista de pedidos en la sesión. */
+    /**
+     * Lista de pedidos en la sesión.
+     */
     @Getter
     @Setter
     private static ArrayList<Pedido> pedidos = new ArrayList<>();
 
-    /** Lista de productos en la sesión. */
+    /**
+     * Lista de productos en la sesión.
+     */
     @Getter
     @Setter
     private static ArrayList<Producto> productos = new ArrayList<>();
 
-    /** Lista de ítems en la sesión. */
+    /**
+     * Lista de ítems en la sesión.
+     */
     @Getter
     @Setter
     private static ArrayList<Item> items = new ArrayList<>();

@@ -1,12 +1,11 @@
 package com.example.gestordepedidoshibernate.domain.item;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
-import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
+import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,24 +19,19 @@ public class ItemDAO implements DAO<Item> {
      *
      * @return Una lista de todos los items en la base de datos.
      */
+
     @Override
     public ArrayList<Item> getAll() {
-        // Crea una lista para almacenar los resultados.
         var salida = new ArrayList<Item>(0);
-
-        try (Session sesion = HibernateUtils.getSessionFactory().openSession()) {
-            // Abre una sesión de Hibernate.
-
-            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los objetos Item.
-            Query<Item> q = sesion.createQuery("from Item", Item.class);
-
-            // Ejecuta la consulta y asigna los resultados a la lista de salida.
-            salida = (ArrayList<Item>) q.getResultList();
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try{
+            TypedQuery<Item> query = entityManager.createQuery("select i from Item i", Item.class);
+            salida = (ArrayList<Item>) query.getResultList();
+        } finally {
+            entityManager.close();
         }
-        // Retorna la lista de resultados.
         return salida;
     }
-
 
     /**
      * Obtiene un item de la base de datos por su identificador único.
@@ -48,19 +42,24 @@ public class ItemDAO implements DAO<Item> {
     @Override
     public Item get(Integer id) {
         // Crea una instancia de Item para almacenar el resultado.
-        var salida = new Item();
+        Item salida = null;
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
 
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            // Abre una sesión de Hibernate.
-
+        try {
+            TypedQuery<Item> query = entityManager.createQuery("select i from Item i where i.id= :id", Item.class);
+            query.setParameter("id", id);
             // Utiliza el método `get` de Hibernate para obtener el objeto Item por su identificador.
-            salida = session.get(Item.class, id);
+            // Utiliza el método `get` de Hibernate para obtener el objeto Usuario por su identificador.
+            var resultado = query.getResultList();
+            if (!resultado.isEmpty()) {
+                salida = resultado.get(0);
+            }
+        } finally {
+            entityManager.close();
         }
-
-        // Retorna el objeto Item obtenido por su identificador.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
-
 
     /**
      * Guarda un nuevo item o actualiza uno existente en la base de datos.
@@ -70,30 +69,17 @@ public class ItemDAO implements DAO<Item> {
      */
     @Override
     public Item save(Item data) {
-        // Abre una sesión de Hibernate.
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
-            // Inicia una transacción.
-            Transaction t = null;
-            try {
-                t = s.beginTransaction();
-
-                // Guarda el objeto Item en la base de datos.
-                s.persist(data);
-
-                // Confirma la transacción.
-                t.commit();
-            } catch (Exception e) {
-                // En caso de excepción, realiza un rollback de la transacción.
-                if (t != null) {
-                    t.rollback();
-                }
-                e.printStackTrace();
-            }
-            // Retorna el objeto Item.
-            return data;
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(data);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
         }
+        return data;// Si da problemas -> return null
     }
-
 
     /**
      * Actualiza un item existente en la base de datos.
@@ -101,34 +87,22 @@ public class ItemDAO implements DAO<Item> {
      * @param data El item a actualizar.
      */
     @Override
-    public void update(Item data) {
+    public Item update(Item data) {
         // Abre una sesión de Hibernate.
-        Session session = HibernateUtils.getSessionFactory().openSession();
-
-        // Inicializa la transacción.
-        Transaction transaction = null;
-
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         try {
-            // Da comienzo la transacción.
-            transaction = session.beginTransaction();
+            entityManager.getTransaction().begin();
 
-            // Actualiza el objeto Item en la base de datos.
-            session.update(data);
-
-            // Confirma la transacción.
-            transaction.commit();
+            data = entityManager.merge(data);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            // En caso de excepción, realiza un rollback de la transacción.
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
         } finally {
-            // Cierra la sesión de Hibernate.
-            session.close();
+            entityManager.close();
         }
+        return data;// Si da problemas -> return null
     }
-
 
     /**
      * Elimina un item de la base de datos.
@@ -137,14 +111,42 @@ public class ItemDAO implements DAO<Item> {
      */
     @Override
     public void delete(Item data) {
-        // Utiliza el método inTransaction de HibernateUtils para trabajar con una transacción.
-        HibernateUtils.getSessionFactory().inTransaction(session -> {
-            // Obtiene el objeto Item a partir de su identificador.
-            Item item = session.get(Item.class, data.getId_item());
-
-            // Elimina el objeto Item de la base de datos.
-            session.remove(item);
-        });
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            // Si la entidad no está gestionada, primero la adjuntamos al contexto de persistencia.
+            if (!entityManager.contains(data)) {
+                data = entityManager.merge(data);
+            }
+            entityManager.remove(data);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
     }
 
+
+    /**
+     * Guarda una lista de objetos de tipo Item en la base de datos.
+     *
+     * @param data La lista de objetos de tipo Item que se va a guardar.
+     */
+    @Override
+    public void saveAll(List<Item> data) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            for (Item i : data) {
+                entityManager.persist(i);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+    }
 }

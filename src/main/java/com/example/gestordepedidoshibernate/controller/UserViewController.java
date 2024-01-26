@@ -1,13 +1,13 @@
 package com.example.gestordepedidoshibernate.controller;
 
 import com.example.gestordepedidoshibernate.HelloApplication;
-import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
 import com.example.gestordepedidoshibernate.domain.item.Item;
 import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 
 import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAO;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAO;
+import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,9 +15,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,13 +46,8 @@ public class UserViewController implements Initializable {
     @javafx.fxml.FXML
     private TableColumn<Pedido, String> cTotal; // Columna para mostrar el total de los pedidos.
 
-
     private ObservableList<Pedido> observablePedidos; // Lista observable para almacenar y mostrar los pedidos.
     private final PedidoDAO pedidoDAO = new PedidoDAO(); //Creo una instancia de PedidoDAO.
-    @javafx.fxml.FXML
-    private Button btnAdd;
-    @javafx.fxml.FXML
-    private Button btnDelete;
 
 
     /**
@@ -136,7 +132,6 @@ public class UserViewController implements Initializable {
         });
     }
 
-
     /**
      * Carga la lista de pedidos para el usuario actual y actualiza la tabla.
      */
@@ -155,7 +150,6 @@ public class UserViewController implements Initializable {
         // Establece la lista observable como el conjunto de elementos que se mostrarán en la tabla de pedidos.
         tPedidos.setItems(observablePedidos);
     }
-
 
     /**
      * Calcula el total de los pedidos sumando los precios de los productos.
@@ -224,64 +218,88 @@ public class UserViewController implements Initializable {
 
     @javafx.fxml.FXML
     public void addPedido(ActionEvent actionEvent) {
-        // Crea una nueva instancia de Pedido.
-        Pedido pedidoAnadido = new Pedido();
+        Pedido nuevoPedido = new Pedido();
+        setId(nuevoPedido);
+        setCodigoPedido(nuevoPedido);
+        setFecha(nuevoPedido);
+        nuevoPedido.setUsuario(Sesion.getUsuario());
 
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
-            // Obtiene el último código de los pedidos.
-            Query<String> q = s.createQuery("select max(p.codigo_pedido) from Pedido p", String.class);
-            String ultimoCodigoPedido = q.uniqueResult();
-
-            // Aumenta en 1 el último número del código de los pedidos.
-            int ultimoNumero = Integer.parseInt(ultimoCodigoPedido.substring(4));
-            int nuevoNumero = ultimoNumero + 1;
-
-            // Genero un nuevo código de pedido concatenando "PED-" con un número formateado a tres dígitos
-            String nuevoCodigoPedido = "PED-" + String.format("%03d", nuevoNumero);
-
-            // Establece el nuevo código en el pedido.
-            pedidoAnadido.setCodigo_pedido(nuevoCodigoPedido);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //Si el pedido no tiene items dentro el total se establece a '0.0'.
+        if (nuevoPedido.getItems().isEmpty()) {
+            nuevoPedido.setTotal(0.0);
         }
 
-        // Establecer la fecha actual por defecto.
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String fechaActual = dateFormat.format(new Date());
-        pedidoAnadido.setFecha(fechaActual);
+        //Agrega el nuevo pedido a la lista Observable.
+        observablePedidos.add(nuevoPedido);
 
-        // Establece el usuario actual en el nuevo pedido.
-        pedidoAnadido.setUsuario(Sesion.getUsuario());
-
-        // Establece un ID temporal para el nuevo pedido.
-        pedidoAnadido.setId_pedido(0);
-
-        // Si la lista de items del pedido está vacía, establece el total en 0.0.
-        if (pedidoAnadido.getItems().isEmpty()) {
-            pedidoAnadido.setTotal(0.0);
-        }
-
-        // Añade el nuevo pedido a la lista observable de pedidos.
-        observablePedidos.add(pedidoAnadido);
-
-        // Actualiza la tabla de pedidos con la nueva lista observable.
+        //Actualiza la tabla.
         tPedidos.setItems(observablePedidos);
+        Sesion.setPedido((new PedidoDAO()).save(nuevoPedido));
+        Sesion.setPedido(nuevoPedido);
 
-        // Guarda el nuevo pedido en la base de datos y establece el pedido actual en la sesión.
-        Sesion.setPedido((new PedidoDAO()).save(pedidoAnadido));
-        Sesion.setPedido(pedidoAnadido);
-
-        // Muestra un cuadro de diálogo de información indicando que el pedido se ha añadido correctamente.
+        //Alerta que indica que el pedido fue creado con éxito.
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Enhorabuena");
-        alert.setHeaderText("El pedido se ha añadido correctamente");
-        alert.setContentText("El código del pedido es: " + Sesion.getPedido().getCodigo_pedido());
+        alert.setTitle("¡Éxito!");
+        alert.setHeaderText("Tu pedido ha sido creado");
+        alert.setContentText("Código de pedido: " + Sesion.getPedido().getCodigo_pedido());
         alert.showAndWait();
 
-        // Carga la vista de detalles del pedido.
+        //Después de la alerta, lleva a la ventana DetallesPedidoController del respectivo pedido.
         HelloApplication.loadFXMLDetails("details-view.fxml");
     }
 
+    private void setId(Pedido pedido) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            TypedQuery<Integer> query = entityManager.createQuery("select MAX(p.id_pedido) FROM Pedido p", Integer.class);
+            Integer ultimoId = query.getSingleResult();
+            if (ultimoId != null){
+                //Incrementa y establece el último id.
+                pedido.setId_pedido(ultimoId + 1);
+            } else { //Si no hay pedidos en la Base de Datos, el id será por defecto '1'.
+                pedido.setId_pedido(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Establece el código de pedido para el nuevo pedido.
+     *
+     * @param pedido Pedido al que se le establecerá el nuevo código de pedido.
+     */
+    private void setCodigoPedido(Pedido pedido) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            TypedQuery<String> query = entityManager.createQuery("select MAX(p.codigo_pedido) FROM Pedido p", String.class);
+            String ultimoCodigoPedido = query.getSingleResult();
+            if (ultimoCodigoPedido != null) {
+                //Incrementa el último código de pedido.
+                Integer ultimoNumero = Integer.parseInt(ultimoCodigoPedido.substring(4));
+                Integer nuevoNumero = ultimoNumero + 1;
+                String nuevoCodigoPedido = "PED-" + String.format("%03d", nuevoNumero);
+                //Establece el nuevo código de pedido.
+                pedido.setCodigo_pedido(nuevoCodigoPedido);
+            }else { //Si no hay pedidos en la Base de Datos, el código de pedido será por defecto 'PED-001'.
+                pedido.setCodigo_pedido("PED-001");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Establece la fecha del nuevo pedido.
+     *
+     * @param pedido Pedido al que se le establecerá la fecha.
+     */
+    private void setFecha(Pedido pedido) {
+        //Establece la fecha actual por defecto.
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaActual = dateFormat.format(new Date());
+        pedido.setFecha(fechaActual);
+    }
 
     /**
      * Elimina el pedido seleccionado.
@@ -317,5 +335,4 @@ public class UserViewController implements Initializable {
             alert.showAndWait();
         }
     }
-
 }

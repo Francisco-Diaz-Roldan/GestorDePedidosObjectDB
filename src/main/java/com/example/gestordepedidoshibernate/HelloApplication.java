@@ -1,6 +1,10 @@
 package com.example.gestordepedidoshibernate;
 
-
+import com.example.gestordepedidoshibernate.Data.Data;
+import com.example.gestordepedidoshibernate.domain.producto.Producto;
+import com.example.gestordepedidoshibernate.domain.producto.ProductoDAO;
+import com.example.gestordepedidoshibernate.domain.usuario.Usuario;
+import com.example.gestordepedidoshibernate.domain.usuario.UsuarioDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,13 +12,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * La clase HelloApplication extiende la clase Application de JavaFX y sirve como punto de entrada para la aplicación.
  * Esta clase se encarga de la gestión de ventanas y escenas en la aplicación JavaFX.
  */
 public class HelloApplication extends Application {
-    //hola
     private static Stage miStage;
 
     /**
@@ -24,6 +28,41 @@ public class HelloApplication extends Application {
      * @throws IOException En caso de que ocurra un error de lectura de archivos FXML.
      */
     public void start(Stage stage) throws IOException {
+
+        try {
+            // Creo una instancia del UsuarioDAO para interactuar con la entidad Usuario en la base de datos
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+            // Obtengo todos los usuarios de la base de datos
+            List<Usuario> usuarios = usuarioDAO.getAll();
+
+            // Compruebo si no hay usuarios en la base de datos
+            if (usuarios.isEmpty()) {
+                // Genero una lista de usuarios utilizando el método generarUsuarios de la clase Data
+                usuarios = Data.generarUsuarios();
+
+                // Guardo todos los usuarios generados en la base de datos
+                usuarioDAO.saveAll(usuarios);
+            }
+
+            // Creo una instancia del ProductoDAO para interactuar con la entidad Producto en la base de datos
+            ProductoDAO productoDAO = new ProductoDAO();
+
+            // Obtengo todos los productos de la base de datos
+            List<Producto> productos = productoDAO.getAll();
+
+            // Compruebo si no hay productos en la base de datos
+            if (productos.isEmpty()) {
+                // Genero una lista de productos utilizando el método generarProductos de la clase Data
+                productos = Data.generarProductos();
+
+                // Guardo todos los productos generados en la base de datos
+                productoDAO.saveAll(productos);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         // Establece el stage (escenario) y evita que sea redimensionable.
         miStage = stage;
         stage.setResizable(false);

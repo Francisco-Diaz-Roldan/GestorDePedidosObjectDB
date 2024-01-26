@@ -7,33 +7,21 @@ import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAO;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.embed.swing.SwingNode;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -274,8 +262,15 @@ public class DetailsViewController implements Initializable {
      * @param actionEvent Evento de acción que desencadenó la generación del informe.
      */
     @javafx.fxml.FXML
-    public void printPDF(ActionEvent actionEvent) {
-        // Obtengo el código del pedido desde la sesión
+    public void printPDF(ActionEvent actionEvent) { //Deshabilito el botón de imprimir para ObjectDB
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información para el usuario");
+        alert.setHeaderText("Funcionalidad temporalmente desactivada");
+        alert.setContentText("Esta funcionalidad se encuentra desactivada para la tarea actual. " +
+                "Disculpe las molestias.");
+        alert.showAndWait();
+        System.out.println("Funcionalidad temporalmente desactivada");
+       /* // Obtengo el código del pedido desde la sesión
         String codigo_pedido = Sesion.getPedido().getCodigo_pedido();
         // Creo una nueva ventana
         Stage stage = new Stage();
@@ -318,7 +313,7 @@ public class DetailsViewController implements Initializable {
             exporter.exportReport();
         } catch (SQLException | JRException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     /**

@@ -1,12 +1,12 @@
 package com.example.gestordepedidoshibernate.domain.pedido;
 
 import com.example.gestordepedidoshibernate.domain.dao.DAO;
-import com.example.gestordepedidoshibernate.domain.hibernateutils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import com.example.gestordepedidoshibernate.objectdbutils.ObjectDBUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que implementa la interfaz DAO para la entidad Pedido. Proporciona métodos para acceder y manipular los datos
@@ -21,19 +21,19 @@ public class PedidoDAO implements DAO<Pedido> {
      */
     @Override
     public ArrayList<Pedido> getAll() {
-        // Crea una lista para almacenar los resultados.
         var salida = new ArrayList<Pedido>(0);
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
 
-        // Abre una sesión de Hibernate.
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
-            // Crea una consulta HQL (Hibernate Query Language) para obtener todos los objetos Pedido.
-            Query<Pedido> q = s.createQuery("from Pedido", Pedido.class);
-
-            // Ejecuta la consulta y asigna los resultados a la lista de salida.
-            salida = (ArrayList<Pedido>) q.getResultList();
+        // Abro una sesión de Hibernate.
+        try {
+            TypedQuery<Pedido> query = entityManager.createQuery("select p from Pedido p", Pedido.class);
+            // Obtengo la lista de resultados.
+            salida = (ArrayList<Pedido>) query.getResultList();
+        } finally {
+            entityManager.close();
         }
 
-        // Retorna la lista de resultados.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
 
@@ -44,21 +44,26 @@ public class PedidoDAO implements DAO<Pedido> {
      * @param id Identificador único del pedido.
      * @return Pedido recuperado de la base de datos.
      */
+
     @Override
     public Pedido get(Integer id) {
-        // Crea una instancia de Pedido para almacenar el resultado.
-        var salida = new Pedido();
-
-        // Abre una sesión de Hibernate.
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            // Utiliza el método `get` de Hibernate para obtener el objeto Pedido por su identificador.
-            salida = session.get(Pedido.class, id);
+        Pedido salida = null;
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        // Crea una sesión de Hibernate.
+        try {
+            TypedQuery<Pedido> query = entityManager.createQuery("select p from Pedido p where  p.id_pedido= :id", Pedido.class);
+            query.setParameter("id", id);
+            // Utiliza el método `get` de Hibernate para obtener el objeto Usuario por su identificador.
+            var resultado = query.getResultList();
+            if (!resultado.isEmpty()) {
+                salida = resultado.get(0);
+            }
+        } finally {
+            entityManager.close();
         }
-
-        // Retorna el objeto Pedido obtenido por su identificador.
+        // Devuelve la lista de Usuarios obtenida de la base de datos.
         return salida;
     }
-
 
     /**
      * Guarda un nuevo pedido o actualiza uno existente en la base de datos.
@@ -68,80 +73,83 @@ public class PedidoDAO implements DAO<Pedido> {
      */
     @Override
     public Pedido save(Pedido data) {
-        // Abre una sesión de Hibernate.
-        try (Session s = HibernateUtils.getSessionFactory().openSession()) {
+        // Abre una sesión de EntityManager
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+
+        try {
             // Inicia una transacción.
-            Transaction t = null;
-            try {
-                t = s.beginTransaction();
-
-                // Guarda el objeto Pedido en la base de datos.
-                s.save(data);
-
-                // Confirma la transacción.
-                t.commit();
-            } catch (Exception e) {
-                // En caso de excepción, realiza un rollback de la transacción.
-                if (t != null) {
-                    t.rollback();
-                }
-                e.printStackTrace();
-            }
-            // Devuelve el objeto Pedido.
-            return data;
+            entityManager.getTransaction().begin();
+            entityManager.persist(data);
+            entityManager.getTransaction().commit();
+            }finally{
+            entityManager.close();
         }
+        // Devuelve el objeto Pedido.
+        return data;
     }
-
 
     /**
      * Actualiza un pedido existente en la base de datos.
      *
      * @param data Pedido a ser actualizado.
      */
-    @Override
-    public void update(Pedido data) {
-        // Abre una sesión de Hibernate.
-        Session session = HibernateUtils.getSessionFactory().openSession();
-
-        // Inicializa la transacción.
-        Transaction transaction = null;
-
+    public Pedido update(Pedido data) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
         try {
-            // Da comienzo la transacción.
-            transaction = session.beginTransaction();
+            entityManager.getTransaction().begin();
 
-            // Utiliza el método `update` de Hibernate para actualizar el objeto Pedido en la base de datos.
-            session.update(data);
-
-            // Confirma la transacción.
-            transaction.commit();
+            data = entityManager.merge(data);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            // En caso de excepción, realiza un rollback de la transacción.
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
         } finally {
-            // Cierra la sesión de Hibernate.
-            session.close();
+            entityManager.close();
         }
+        return data;
     }
-
 
     /**
      * Elimina un pedido de la base de datos.
      *
      * @param data Pedido a ser eliminado.
      */
-    @Override
     public void delete(Pedido data) {
-        // Utiliza el método inTransaction de HibernateUtils para trabajar con una transacción.
-        HibernateUtils.getSessionFactory().inTransaction(session -> {
-            // Obtiene el objeto Pedido a partir de su identificador.
-            Pedido pedido = session.get(Pedido.class, data.getId_pedido());
-            // Elimina el objeto Pedido de la base de datos.
-            session.remove(pedido);
-        });
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            // Si la entidad no está gestionada, primero la adjuntamos al contexto de persistencia.
+            if (!entityManager.contains(data)) {
+                data = entityManager.merge(data);
+            }
+            entityManager.remove(data);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
     }
 
+    /**
+     * Guarda una lista de objetos de tipo Pedido en la base de datos.
+     *
+     * @param data La lista de objetos de tipo Pedido que se va a guardar.
+     */
+    @Override
+    public void saveAll(List<Pedido> data) {
+        EntityManager entityManager = ObjectDBUtils.getEntityManagerFactory().createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            for (Pedido p : data) {
+                entityManager.persist(p);
+            }
+            entityManager.getTransaction().commit();
+        } finally {
+            entityManager.close();
+        }
+    }
 }
