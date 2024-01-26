@@ -35,6 +35,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 /**
  * Controlador para la vista de detalles de pedidos.
  */
@@ -123,7 +124,7 @@ public class DetailsViewController implements Initializable {
         // Establece el usuario en la sesión como null, indicando que no hay usuario activo.
         Sesion.setUsuario(null);
 
-        // Carga el FXML de la pantalla de inicio de sesión utilizando el método loadFXMLLogin de la clase HelloApplication.
+        // Carga el FXML de la pantalla de inicio de sesión utilizando loadFXMLLogin de la clase HelloApplication.
         HelloApplication.loadFXMLLogin("login.fxml");
     }
 
@@ -282,14 +283,17 @@ public class DetailsViewController implements Initializable {
 
         try {
             // Estableco la conexión con la base de datos
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_pedidos","root","");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_pedidos"
+                    , "root", "");
 
             // Creo un mapa parametrizado para el informe
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("codigo_pedido", codigo_pedido);// Este parametro es el que luego voy a añadir en JaspersoftReport a mano y le añado un valor por defecto
+            // Parametro al que luego voy a añadir en JaspersoftReport a mano y le añado un valor por defecto
+            hashMap.put("codigo_pedido", codigo_pedido);
 
             // Relleno el informe empleando JasperReports
-            JasperPrint jasperPrint = JasperFillManager.fillReport("ListaPedidos.jasper", hashMap, connection);
+            JasperPrint jasperPrint = JasperFillManager.fillReport("ListaPedidos.jasper"
+                    , hashMap, connection);
 
             // Creo un componente SwingNode para integrar el informe en la interfaz JavaFX
             SwingNode swingNode = new SwingNode();
@@ -299,7 +303,9 @@ public class DetailsViewController implements Initializable {
             StackPane root = new StackPane();
             root.getChildren().add(swingNode);
             Scene scene = new Scene(root, 800, 600);
-            stage.getIcons().add(new Image(getClass().getResource("/imagenes/logo_gestor_pedidos-removebg-preview.png").toString(), 100, 100, true, true));
+            stage.getIcons().add(new Image(getClass()
+                    .getResource("/imagenes/logo_gestor_pedidos-removebg-preview.png").toString(),
+                    100, 100, true, true));
             stage.setTitle("details-view.fxml");
             stage.setScene(scene);
             stage.show();
@@ -314,11 +320,12 @@ public class DetailsViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Crea y establece un visor Jasper como contenido de un nodo SwingNode de JavaFX de manera asíncrona.
      *
-     * @param swingNode    El nodo SwingNode al que se agregará el visor Jasper.
-     * @param jasperPrint  El informe JasperPrint que se mostrará en el visor.
+     * @param swingNode   El nodo SwingNode al que se agregará el visor Jasper.
+     * @param jasperPrint El informe JasperPrint que se mostrará en el visor.
      */
     private void swingWindow(final SwingNode swingNode, JasperPrint jasperPrint) {
         SwingUtilities.invokeLater(() -> {
