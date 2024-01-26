@@ -7,6 +7,8 @@ module com.example.gestordepedidos {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.naming;
+    requires javafx.swing; // Para swing
+    requires jasperreports;// Para jaspersoft
 
 
     opens com.example.gestordepedidoshibernate.domain.item;

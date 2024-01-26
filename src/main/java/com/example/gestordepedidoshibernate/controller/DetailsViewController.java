@@ -7,14 +7,31 @@ import com.example.gestordepedidoshibernate.domain.pedido.Pedido;
 import com.example.gestordepedidoshibernate.domain.pedido.PedidoDAO;
 import com.example.gestordepedidoshibernate.domain.sesion.Sesion;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.embed.swing.SwingNode;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.swing.JRViewer;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -38,15 +55,10 @@ public class DetailsViewController implements Initializable {
     @javafx.fxml.FXML
     private TableView<Item> tItem;  // Tabla que muestra una lista de objetos de la clase Item.
 
-
     // Lista observable para contener los elementos (detalles de pedidos) que se mostrarán en la tabla.
     private ObservableList<Item> observableListItem;
     // Instancia de ItemDAO para acceder a operaciones de base de datos relacionadas con Item.
     private ItemDAO itemDAO = new ItemDAO();
-    @javafx.fxml.FXML
-    private Button btnAdd;
-    @javafx.fxml.FXML
-    private Button btnDelete;
 
     /**
      * Inicializa la vista de detalles de pedidos.
@@ -255,7 +267,48 @@ public class DetailsViewController implements Initializable {
         }
     }
 
-    //TODO Metodo Jaspersoft Reports
+    @javafx.fxml.FXML
+    public void printPDF(ActionEvent actionEvent) {
 
-    //TODO SWING
+        String codigo_pedido = Sesion.getPedido().getCodigo_pedido();
+
+        Stage stage = new Stage();
+        System.out.println(codigo_pedido);
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_pedidos","root","");
+
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("codigo_pedido", codigo_pedido);// Este parametro es el que luego voy a añadir en JaspersoftReport a mano y le añado un valor por defecto
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport("ListaPedidos.jasper", hashMap, connection);
+
+            SwingNode swingNode = new SwingNode();
+            swingWindow(swingNode, jasperPrint);
+
+            StackPane root = new StackPane();
+            root.getChildren().add(swingNode);
+            Scene scene = new Scene(root, 800, 600);
+            stage.getIcons().add(new Image(getClass().getResource("/imagenes/logo_gestor_pedidos-removebg-preview.png").toString(), 100, 100, true, true));
+            stage.setTitle("details-view.fxml");
+            stage.setScene(scene);
+            stage.show();
+
+            JRPdfExporter exporter = new JRPdfExporter();
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("pedido.pdf"));
+            exporter.setConfiguration(new SimplePdfExporterConfiguration());
+            exporter.exportReport();
+        } catch (SQLException | JRException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void swingWindow(final SwingNode swingNode, JasperPrint jasperPrint) {
+        SwingUtilities.invokeLater(() -> {
+            //Creo un visor Jasper y lo establezco como contenido del nodo Swing
+            JRViewer viewer = new JRViewer(jasperPrint);
+            swingNode.setContent(viewer);
+        });
+    }
 }

@@ -99,7 +99,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="otrosBtn" mnemonicParsing="false" onAction="#descargarPDF" prefHeight="50.0" prefWidth="118.0" text="Imprimir ">
+                  <Button id="otrosBtn" fx:id="btnPrint" mnemonicParsing="false" onAction="#printPDF" prefHeight="50.0" prefWidth="118.0" text="Imprimir ">
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                      </padding>
