@@ -39,6 +39,13 @@ public class Usuario implements Serializable {
     @Column(name = "email")
     private String email;
 
+    public Usuario(String nombre, String pass, String email, List<Pedido> pedidos) {
+        this.nombre = nombre;
+        this.pass = pass;
+        this.email = email;
+        this.pedidos = pedidos;
+    }
+
     /** Lista de pedidos asociados al usuario. */
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)

@@ -28,6 +28,12 @@ public class Producto implements Serializable {
     @Column(name = "cantidad_disponible")
     private Integer cantidad_disponible;  // Cantidad disponible del producto.
 
+    public Producto(String nombre, Double precio, Integer cantidad_disponible) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad_disponible = cantidad_disponible;
+    }
+
     /**
      * Devuelve una representación en cadena del objeto Producto, mostrando sus atributos.
      *
