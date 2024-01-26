@@ -267,25 +267,35 @@ public class DetailsViewController implements Initializable {
         }
     }
 
+    /**
+     * Genera y muestra un informe PDF basado en el código del pedido actual.
+     *
+     * @param actionEvent Evento de acción que desencadenó la generación del informe.
+     */
     @javafx.fxml.FXML
     public void printPDF(ActionEvent actionEvent) {
-
+        // Obtengo el código del pedido desde la sesión
         String codigo_pedido = Sesion.getPedido().getCodigo_pedido();
-
+        // Creo una nueva ventana
         Stage stage = new Stage();
         System.out.println(codigo_pedido);
 
         try {
+            // Estableco la conexión con la base de datos
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_pedidos","root","");
 
+            // Creo un mapa parametrizado para el informe
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("codigo_pedido", codigo_pedido);// Este parametro es el que luego voy a añadir en JaspersoftReport a mano y le añado un valor por defecto
 
+            // Relleno el informe empleando JasperReports
             JasperPrint jasperPrint = JasperFillManager.fillReport("ListaPedidos.jasper", hashMap, connection);
 
+            // Creo un componente SwingNode para integrar el informe en la interfaz JavaFX
             SwingNode swingNode = new SwingNode();
             swingWindow(swingNode, jasperPrint);
 
+            // Configuro la escena y muestro la ventana
             StackPane root = new StackPane();
             root.getChildren().add(swingNode);
             Scene scene = new Scene(root, 800, 600);
@@ -294,6 +304,7 @@ public class DetailsViewController implements Initializable {
             stage.setScene(scene);
             stage.show();
 
+            // Exporto el informe a PDF
             JRPdfExporter exporter = new JRPdfExporter();
             exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("pedido.pdf"));
@@ -303,7 +314,12 @@ public class DetailsViewController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Crea y establece un visor Jasper como contenido de un nodo SwingNode de JavaFX de manera asíncrona.
+     *
+     * @param swingNode    El nodo SwingNode al que se agregará el visor Jasper.
+     * @param jasperPrint  El informe JasperPrint que se mostrará en el visor.
+     */
     private void swingWindow(final SwingNode swingNode, JasperPrint jasperPrint) {
         SwingUtilities.invokeLater(() -> {
             //Creo un visor Jasper y lo establezco como contenido del nodo Swing
